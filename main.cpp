@@ -148,19 +148,17 @@ CWoods::CWoods() {}
 /*
  * *************************************CCharacter******************************************
  * */
-CCharacter::CCharacter( pair<size_t, size_t> pos, int hea, int att )
+CCharacter::CCharacter( pair<size_t, size_t> pos, int hea, int att, char sym )
         :   position ( pos ),
             max_health ( hea ),
             health ( max_health ),
-            attack ( att ) {}
+            attack ( att ),
+            symbol ( sym ){}
 /*
  * *************************************CWoods******************************************
  * */
-/*CNpc::CNpc ( pair<size_t, size_t> pos, int hea, int att )
-        :   position ( pos ),
-            max_health ( hea ),
-            health ( max_health ),
-            attack ( att ) {}*/
+/*CNpc::CNpc( pair<size_t, size_t> pos, int hea, int att )
+        :   CCharacter::CCharacter( pos, hea, att ) {}*/
 /*
  * *************************************CWoods******************************************
  * */

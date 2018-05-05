@@ -28,20 +28,29 @@
 
 using namespace std;
 
-
+const int BEAR_HEALTH = 50;
+const int BEAR_ATTACK = 15;
+const char BEAR_SYMBOL = 'b';
+const int WOLF_HEALTH = 25;
+const int WOLF_ATTACK = 8;
+const char WOLF_SYMBOL = 'w';
+const int FRIEND_HEALTH = 100;
+const int FRIEND_ATTACK = 5;
+const char friend_SYMBOL = 'f';
+const char PLAYER_SYMBOL = 'P';
 /*
  * *************************************Character******************************************
  * */
 class CCharacter {
 protected:
-    char name;
+    char symbol;
     pair <size_t, size_t> position;
     int max_health;
     int health;
     int attack;
 public:
-    CCharacter ( pair<size_t, size_t> pos, int hea, int att );
-    char showChar () const { return name; }
+    CCharacter ( pair<size_t, size_t> pos, int hea, int att, char sym );
+    char showChar () const { return symbol; }
     void setPosition ( size_t x, size_t y );
     pair <size_t, size_t> getPosition () const;
     bool correctPosition ( size_t x, size_t y) const;
@@ -54,7 +63,8 @@ public:
 class CPlayer : public CCharacter {
 protected:
 public:
-    CPlayer ( pair<size_t, size_t> pos, int hea, int att );
+    CPlayer ( pair<size_t, size_t> pos, int hea, int att )
+            :   CCharacter ( pos, hea, att, PLAYER_SYMBOL ){}
 };
 /*
  * *************************************NPC - character******************************************
@@ -63,7 +73,8 @@ public:
 class CNpc : public CCharacter {
 protected:
 public:
-    CNpc ( pair<size_t, size_t> pos, int hea, int att );
+    CNpc ( pair<size_t, size_t> pos, int hea, int att, const char & sym )
+            :   CCharacter ( pos, hea, att, sym ){}
     virtual void interact ();
 };
 /*
@@ -72,7 +83,8 @@ public:
 class CMonster : public CNpc {
 protected:
 public:
-    CMonster ( pair<size_t, size_t> pos );
+    CMonster ( pair<size_t, size_t> pos, int hea, int att, const char & sym  )
+            :   CNpc ( pos, hea, att, sym ){}
 };
 /*
  * *************************************Wolf - monster - NPC - character******************************************
@@ -80,7 +92,8 @@ public:
 class CWolf : public CMonster {
 protected:
 public:
-    CWolf ( pair<size_t, size_t> pos );
+    CWolf ( pair<size_t, size_t> pos )
+            :   CMonster ( pos, BEAR_HEALTH, BEAR_ATTACK, BEAR_SYMBOL ){}
 };
 /*
  * *************************************Bear - monster - NPC - character******************************************
@@ -88,7 +101,8 @@ public:
 class CBear : public CMonster {
 protected:
 public:
-    CBear ( pair<size_t, size_t> pos );
+    CBear ( pair<size_t, size_t> pos )
+            :   CMonster ( pos, WOLF_HEALTH, WOLF_ATTACK, WOLF_SYMBOL ){}
 };
 /*
  * *************************************Friend - NPC - character******************************************
