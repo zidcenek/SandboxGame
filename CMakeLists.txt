@@ -3,4 +3,4 @@ project(sandboxGame)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(sandboxGame main.cpp)
+add_executable(sandboxGame main.cpp classesHeader.h)
