@@ -1,27 +1,14 @@
 #ifndef SANDBOXGAME_CLASSESHEADER_H
 #define SANDBOXGAME_CLASSESHEADER_H
-#include <cstdlib>
-#include <cstdio>
-#include <cstring>
-#include <cctype>
-#include <climits>
-#include <cassert>
 #include <iostream>
-#include <iomanip>
 #include <string>
-#include <array>
 #include <vector>
-#include <list>
-#include <set>
 #include <map>
-#include <memory>
 #include <algorithm>
-#include <functional>
-#include <iterator>
-#include <iomanip>
 #include <fstream>
-#include <sstream>
-
+#include "character.h"
+#include "player.h"
+#include "npc.h"
 using namespace std;
 
 const int BEAR_HEALTH = 50;
@@ -33,45 +20,15 @@ const char WOLF_SYMBOL = 'w';
 const int FRIEND_HEALTH = 100;
 const int FRIEND_ATTACK = 5;
 const char friend_SYMBOL = 'f';
-const char PLAYER_SYMBOL = 'P';
 /*
  * *************************************Character******************************************
  * */
-class CCharacter {
-protected:
-    char symbol;
-    pair <size_t, size_t> position;
-    int max_health;
-    int health;
-    int attack;
-public:
-    CCharacter ( pair<size_t, size_t> pos, int hea, int att, char sym );
-    char showChar () const { return symbol; }
-    void setPosition ( size_t x, size_t y );
-    pair <size_t, size_t> getPosition () const;
-    bool correctPosition ( size_t x, size_t y) const;
-    void recieveDmg ( int damage );
-    void heal ( int health );
-};
 /*
  * *************************************PLayer - character******************************************
  * */
-class CPlayer : public CCharacter {
-protected:
-public:
-    CPlayer ( pair<size_t, size_t> pos, int hea, int att )
-            :   CCharacter ( pos, hea, att, PLAYER_SYMBOL ){}
-};
 /*
  * *************************************NPC - character******************************************
  * */
-class CNpc : public CCharacter {
-protected:
-public:
-    CNpc ( pair<size_t, size_t> pos, int hea, int att, const char & sym )
-            :   CCharacter ( pos, hea, att, sym ){}
-    virtual void interact ();
-};
 /*
  * *************************************Monster - NPC - character******************************************
  * */
