@@ -1,7 +1,3 @@
-//
-// Created by student on 5.5.18.
-//
-
 #ifndef SANDBOXGAME_CLASSESHEADER_H
 #define SANDBOXGAME_CLASSESHEADER_H
 #include <cstdlib>
@@ -69,7 +65,6 @@ public:
 /*
  * *************************************NPC - character******************************************
  * */
-
 class CNpc : public CCharacter {
 protected:
 public:
@@ -146,7 +141,7 @@ public:
     CLava ();
 };
 /*
- * *************************************ControlPanel******************************************
+ * *************************************CMap******************************************
  * */
 class CMap {
 protected:

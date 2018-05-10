@@ -38,6 +38,13 @@ bool CMap::load (){
         return false;
     }
 }
+/**
+ *
+ * blabla
+ * @param terrain
+ * @param lineNumber
+ * @return
+ */
 bool CMap::addTerrain ( const char & terrain, size_t lineNumber )
 {
     CTerrain * tmp;
