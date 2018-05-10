@@ -9,17 +9,13 @@
 #include "character.h"
 #include "player.h"
 #include "npc.h"
-using namespace std;
+#include "monster.h"
+#include "bear.h"
+#include "wolf.h"
+#include "terrain.h"
+#include "road.h"
 
-const int BEAR_HEALTH = 50;
-const int BEAR_ATTACK = 15;
-const char BEAR_SYMBOL = 'b';
-const int WOLF_HEALTH = 25;
-const int WOLF_ATTACK = 8;
-const char WOLF_SYMBOL = 'w';
-const int FRIEND_HEALTH = 100;
-const int FRIEND_ATTACK = 5;
-const char friend_SYMBOL = 'f';
+using namespace std;
 /*
  * *************************************Character******************************************
  * */
@@ -32,55 +28,21 @@ const char friend_SYMBOL = 'f';
 /*
  * *************************************Monster - NPC - character******************************************
  * */
-class CMonster : public CNpc {
-protected:
-public:
-    CMonster ( pair<size_t, size_t> pos, int hea, int att, const char & sym  )
-            :   CNpc ( pos, hea, att, sym ){}
-};
 /*
  * *************************************Wolf - monster - NPC - character******************************************
  * */
-class CWolf : public CMonster {
-protected:
-public:
-    CWolf ( pair<size_t, size_t> pos )
-            :   CMonster ( pos, BEAR_HEALTH, BEAR_ATTACK, BEAR_SYMBOL ){}
-};
 /*
  * *************************************Bear - monster - NPC - character******************************************
  * */
-class CBear : public CMonster {
-protected:
-public:
-    CBear ( pair<size_t, size_t> pos )
-            :   CMonster ( pos, WOLF_HEALTH, WOLF_ATTACK, WOLF_SYMBOL ){}
-};
 /*
  * *************************************Friend - NPC - character******************************************
  * */
-class CFriend : public CNpc {
-protected:
-public:
-    CFriend ( pair<size_t, size_t> pos );
-};
 /*
  * *************************************Terrain******************************************
  * */
-class CTerrain {
-protected:
-    char name;
-public:
-    CTerrain ();
-};
 /*
  * *************************************Road - terrain******************************************
  * */
-class CRoad : public CTerrain {
-protected:
-public:
-    CRoad ();
-};
 /*
  * *************************************Woods - terrain******************************************
  * */
