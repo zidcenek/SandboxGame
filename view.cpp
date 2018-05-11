@@ -7,12 +7,16 @@
 using namespace std;
 
 CView::CView ( ostream & ostr )
-    : os ( ostr )
+    : os ( cout )
 {
+    os << "sracka" << endl;
 }
 CView::~CView()
 {
 }
-void CView::print ( string str ) {
-    os << str;
+void CView::print ( const char * str ) {
+    cout << str;
+}
+void CView::print ( const char str ){
+    cout << str;
 }

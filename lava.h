@@ -6,6 +6,9 @@
 #define SANDBOXGAME_LAVA_H
 
 #include "terrain.h"
+
+const char LAVA_SYMBOL = 'L';
+
 /*
  * Class representing lava ( specific symbol L )
  */
@@ -14,6 +17,7 @@ protected:
 public:
     CLava ();
     ~CLava ();
+    virtual void print () const;
 };
 
 #endif //SANDBOXGAME_LAVA_H

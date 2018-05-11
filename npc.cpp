@@ -6,7 +6,7 @@
 using namespace std;
 
 CNpc::CNpc ( pair<size_t, size_t> pos, int hea, int att, const char & sym )
-    :   CCharacter::CCharacter ( pos, hea, att, 'A' )
+    :   CCharacter::CCharacter ( pos, hea, att, sym )
 {
 }
 CNpc::~CNpc()

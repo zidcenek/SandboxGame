@@ -10,4 +10,7 @@ CLava::CLava()
 CLava::~CLava()
 {
 }
+void CLava::print () const {
+    std::cout << LAVA_SYMBOL;
+}
 

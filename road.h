@@ -7,6 +7,8 @@
 
 #include "terrain.h"
 
+const char ROAD_SYMBOL = 'R';
+
 /*
  * class representing terrain - road ( symbol R )
  */
@@ -15,6 +17,7 @@ protected:
 public:
     CRoad ();
     ~CRoad ();
+    virtual void print () const;
 };
 
 #endif //SANDBOXGAME_ROAD_H

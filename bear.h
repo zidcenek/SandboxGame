@@ -11,7 +11,7 @@ using namespace std;
 
 const int BEAR_HEALTH = 50;
 const int BEAR_ATTACK = 15;
-const char BEAR_SYMBOL = 'b';
+const char BEAR_SYMBOL = 'B';
 
 /*
  * class representing specific monster - bear ( symbol B )

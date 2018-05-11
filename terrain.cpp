@@ -4,6 +4,7 @@
 
 #include "terrain.h"
 
+using namespace std;
 
 CTerrain::CTerrain ()
 {
@@ -11,3 +12,4 @@ CTerrain::CTerrain ()
 CTerrain::~CTerrain ()
 {
 }
+

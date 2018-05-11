@@ -7,6 +7,8 @@
 
 #include "terrain.h"
 
+const char WOODS_SYMBOL = 'W';
+
 /*
  * Class representing forest ( specific symbol W )
  */
@@ -15,6 +17,7 @@ protected:
 public:
     CWoods ();
     ~CWoods ();
+    virtual void print () const;
 };
 
 #endif //SANDBOXGAME_WOODS_H

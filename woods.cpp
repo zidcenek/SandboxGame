@@ -11,3 +11,6 @@ CWoods::CWoods()
 CWoods::~CWoods()
 {
 }
+void CWoods::print () const {
+    std::cout << WOODS_SYMBOL;
+}
