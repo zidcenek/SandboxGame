@@ -3,12 +3,21 @@ using namespace std;
 /*
  * *************************************ControlPanel******************************************
  * */
-
+/**
+ * constructor
+ */
 CControlPanel::CControlPanel ()
     :   width ( 0 ),
         height ( 0 ),
-        moves ( 0 ){}
-
+        moves ( 0 )
+{
+}
+/**
+ * destructor
+ */
+CControlPanel::~CControlPanel()
+{
+}
 bool CControlPanel::initialize (){
     map . load();
 }
@@ -18,6 +27,10 @@ bool CControlPanel::readChar (){
 /*
  * *************************************CMap******************************************
  * */
+/**
+ * loads the whole map
+ * @return
+ */
 bool CMap::load (){
     string srcFile;
 
@@ -38,15 +51,14 @@ bool CMap::load (){
         return false;
     }
 }
-/**
- *
- * blabla
- * @param terrain
- * @param lineNumber
- * @return
- */
-bool CMap::addTerrain ( const char & terrain, size_t lineNumber )
-{
+
+ /**
+  * parses specific characters and creates objects if possible
+  * @param terrain - character representing a specific type of terrain
+  * @param lineNumber - what line is the program supposed to modify
+  * @return - if there is an unknown type of character
+  */
+bool CMap::addTerrain ( const char & terrain, size_t lineNumber ) {
     CTerrain * tmp;
     switch ( terrain ){
         case 'L' : tmp = new CLava ();
@@ -61,13 +73,36 @@ bool CMap::addTerrain ( const char & terrain, size_t lineNumber )
     terrain_map[ lineNumber ] . push_back( tmp );
     return true;
 }
-bool CMap::addCharacter ( const char & character, size_t lineNumber )
-{
-    /*switch ( character ){
-        case 'W' :
-    }*/
+
+/**
+ * parses specific characters and creates objects if possible
+ * @param character - character representing a specific type of character
+ * @param lineNumber - what line is the program supposed to modify
+ * @return
+ */
+bool CMap::addCharacter ( const char & character, size_t lineNumber ) {
+    CCharacter * tmp;
+    pair<size_t, size_t> pos = make_pair( lineNumber, characters_map[lineNumber] . size() );
+    switch ( character ){
+        case 'P' : tmp = new CPlayer ( pos, 100, 5 );
+            break;
+        case 'F' : tmp = new CFriend ( pos );
+            break;
+        case 'B' : tmp = new CBear ( pos );
+            break;
+        case 'w' : tmp = new CWolf ( pos );
+        default  :
+            tmp = new CFriend ( pos );
+    }
+    characters_map[ lineNumber ] . push_back( tmp );
     return true;
 }
+
+/**
+ * reads header of the file
+ * @param ifs - ifstream
+ * @return - false if not in the correct format
+ */
 bool CMap::readHeader ( ifstream & ifs ){
     string readStr;
     size_t sz;
@@ -75,34 +110,20 @@ bool CMap::readHeader ( ifstream & ifs ){
         return false;
     }
     /* parsing header */
-    getline (ifs, readStr ); // width
-    if ( readStr . substr ( 0, 6 ) != "width:" )
+    if ( ( ! readLine ( ifs, readStr, width ) ) || readStr != "width:" )
         return false;
-    readStr . erase ( 0, 6 );
-    width = stoi ( readStr, &sz );
-    readStr . erase ( 0, sz );
-    if ( readStr != "") // wheter there is any junk
+    if ( ( ! readLine ( ifs, readStr, height ) ) || readStr != "heigh:" )
         return false;
-
-    getline (ifs, readStr ); // height
-    if ( readStr . substr ( 0, 7 ) != "height:" )
-        return false;
-    readStr . erase ( 0, 7 );
-    height = stoi ( readStr, &sz );
-    readStr . erase ( 0, sz );
-    if ( readStr != "") // wheter there is any junk
-        return false;
-
-    getline (ifs, readStr ); // moves
-    if ( readStr . substr ( 0, 6 ) != "moves:" )
-        return false;
-    readStr . erase ( 0, 6 );
-    moves = stoi ( readStr, &sz );
-    readStr . erase ( 0, sz );
-    if ( readStr != "") // wheter there is any junk
+    if ( ( ! readLine ( ifs, readStr, moves ) ) || readStr != "moves:" )
         return false;
     return true;
 }
+
+/**
+ * reads the contents of the map
+ * @param ifs - ifstream
+ * @return
+ */
 bool CMap::readContent ( ifstream & ifs ){
     cout << "reading content" << endl;
     int linesRead = 0;
@@ -112,11 +133,12 @@ bool CMap::readContent ( ifstream & ifs ){
         cout << line << endl;
         cout << line . length () << endl;
         line . push_back( ' ' );
-        if ( line . length() < 3 * width )
+        if ( line . length() == 3 * width - 1 )
             return false;
         for ( size_t j = 0 ; j < width ; j += 3 ){
             if ( line[ j + 2 ] != ' ' )
                 return false;
+            /* creation of the map */
             vector <CTerrain*> new_terrain_vector;
             vector <CCharacter*> new_character_vector;
             terrain_map . push_back( new_terrain_vector );
@@ -133,23 +155,56 @@ bool CMap::readContent ( ifstream & ifs ){
     }
     return true;
 }
+/**
+ * parsing my type of format used when saving the game ( string(5 chars):size_t )
+ * @param ifs - ifstream
+ * @param name - return parameter specifing name of the line ( width, height etc. )
+ * @param value - return parameter which saves the proper parameter
+ * @return - false if not in a correct format
+ */
+bool CMap::readLine ( ifstream & ifs, string & name, size_t & value ) {
+    string line;
+    size_t sz;
+    getline (ifs, line );
+    name = line . substr ( 0, 6 );
+    line . erase ( 0, 6 );
+    value = stoi ( line, &sz );
+    line . erase ( 0, sz );
+    if ( line != "") // wheter there is any junk
+        return false;
+    return true;
+}
 void CMap::save (){
 
 }
+/**
+ * constructor
+ */
+CMap::CMap ()
+        :   width ( 0 ),
+            height ( 0 ),
+            moves ( 0 )
+{
+}
+/**
+ * destructor
+ */
+CMap::~CMap()
+{
+}
+
 /*
  * *************************************CTerrain******************************************
  * */
 /*
  * *************************************CLava******************************************
  * */
-CLava::CLava() {}
 /*
  * *************************************CRoad******************************************
  * */
 /*
  * *************************************CWoods******************************************
  * */
-CWoods::CWoods() {}
 /*
  * *************************************CCharacter******************************************
  * */

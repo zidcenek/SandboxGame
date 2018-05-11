@@ -7,8 +7,9 @@
 #include "character.h"
 
 const char PLAYER_SYMBOL = 'P';
+
 /*
- * class representing Player ( user )
+ * class representing Player ( user ) ( specific symbol P )
  */
 class CPlayer : public CCharacter {
 protected:

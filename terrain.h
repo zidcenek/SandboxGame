@@ -5,12 +5,16 @@
 #ifndef SANDBOXGAME_TERRAIN_H
 #define SANDBOXGAME_TERRAIN_H
 
-class CTerrain {
+/*
+ * parent to all terrains
+ * #name -> represents symbol used by specific types of terrain
+ */
+ class CTerrain {
 protected:
     char name;
 public:
     CTerrain ();
-    ~CTerrain ();
+    virtual ~CTerrain ();
 };
 
 

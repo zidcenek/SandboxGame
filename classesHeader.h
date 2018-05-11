@@ -9,11 +9,14 @@
 #include "character.h"
 #include "player.h"
 #include "npc.h"
+#include "friend.h"
 #include "monster.h"
 #include "bear.h"
 #include "wolf.h"
 #include "terrain.h"
 #include "road.h"
+#include "lava.h"
+#include "woods.h"
 
 using namespace std;
 /*
@@ -46,19 +49,10 @@ using namespace std;
 /*
  * *************************************Woods - terrain******************************************
  * */
-class CWoods : public CTerrain {
-protected:
-public:
-    CWoods ();
-};
 /*
  * *************************************Lava - terrain******************************************
  * */
-class CLava : public CTerrain {
-protected:
-public:
-    CLava ();
-};
+
 /*
  * *************************************CMap******************************************
  * */
@@ -66,16 +60,16 @@ class CMap {
 protected:
     size_t width;
     size_t height;
-    int moves;
+    size_t moves;
     vector <vector<CTerrain*> > terrain_map;
     vector <vector<CCharacter*> > characters_map;
 public:
-    CMap ()
-        :   width ( 0 ),
-            height ( 0 ){}
+    CMap ();
+    ~CMap();
 
     bool readHeader ( ifstream & ifs );
     bool readContent ( ifstream & ifs );
+    bool readLine ( ifstream & ifs, string & name, size_t & value );
     bool load ();
     void save ();
     bool addTerrain ( const char & terrain, size_t lineNumber );
@@ -93,6 +87,7 @@ protected:
     vector <CCharacter*> characters;
 public:
     CControlPanel ();
+    ~CControlPanel();
     bool readChar ();
     bool initialize ();
 };

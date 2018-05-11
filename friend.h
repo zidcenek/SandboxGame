@@ -9,9 +9,9 @@
 
 const int FRIEND_HEALTH = 100;
 const int FRIEND_ATTACK = 5;
-const char FRIEND_SYMBOL = 'f';
+const char FRIEND_SYMBOL = 'F';
 /*
- * class representing friendly NPC characters ( merchant, guard ... )
+ * class representing friendly NPC characters ( merchant, guard ... ) ( symbol F )
  */
 class CFriend : public CNpc {
 protected:

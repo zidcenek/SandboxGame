@@ -9,6 +9,9 @@
 
 using namespace std;
 
+/*
+ * parent of all enemy monsters
+ */
 class CMonster : public CNpc {
 protected:
 public:

@@ -7,6 +7,9 @@
 
 #include "terrain.h"
 
+/*
+ * class representing terrain - road ( symbol R )
+ */
 class CRoad : public CTerrain {
 protected:
 public:
