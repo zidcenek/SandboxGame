@@ -6,6 +6,7 @@
 #include <map>
 #include <algorithm>
 #include <fstream>
+#include <ostream>
 #include "character.h"
 #include "player.h"
 #include "npc.h"
@@ -17,6 +18,7 @@
 #include "road.h"
 #include "lava.h"
 #include "woods.h"
+#include "view.h"
 
 using namespace std;
 /*
@@ -56,6 +58,8 @@ using namespace std;
 /*
  * *************************************CMap******************************************
  * */
+
+
 class CMap {
 protected:
     size_t width;
@@ -63,8 +67,9 @@ protected:
     size_t moves;
     vector <vector<CTerrain*> > terrain_map;
     vector <vector<CCharacter*> > characters_map;
+    CView view;
 public:
-    CMap ();
+    CMap ( CView ostr );
     ~CMap();
 
     bool readHeader ( ifstream & ifs );
@@ -85,8 +90,9 @@ protected:
     int moves;
     CMap map;
     vector <CCharacter*> characters;
+    CView view;
 public:
-    CControlPanel ();
+    CControlPanel ( ostream & os );
     ~CControlPanel();
     bool readChar ();
     bool initialize ();

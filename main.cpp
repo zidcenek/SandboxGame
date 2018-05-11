@@ -6,10 +6,12 @@ using namespace std;
 /**
  * constructor
  */
-CControlPanel::CControlPanel ()
+CControlPanel::CControlPanel ( ostream & os )
     :   width ( 0 ),
         height ( 0 ),
-        moves ( 0 )
+        moves ( 0 ),
+        view ( CView ( os ) ),
+        map ( view )
 {
 }
 /**
@@ -20,6 +22,7 @@ CControlPanel::~CControlPanel()
 }
 bool CControlPanel::initialize (){
     map . load();
+    map . save();
 }
 bool CControlPanel::readChar (){
 
@@ -125,7 +128,7 @@ bool CMap::readHeader ( ifstream & ifs ){
  * @return
  */
 bool CMap::readContent ( ifstream & ifs ){
-    cout << "reading content" << endl;
+    view . print ( "reading content\n ");
     int linesRead = 0;
     string line;
     for ( size_t i = 0 ; i < height ; i++ ){
@@ -180,10 +183,11 @@ void CMap::save (){
 /**
  * constructor
  */
-CMap::CMap ()
+CMap::CMap ( CView ostr )
         :   width ( 0 ),
             height ( 0 ),
-            moves ( 0 )
+            moves ( 0 ),
+            view ( ostr )
 {
 }
 /**
@@ -192,48 +196,12 @@ CMap::CMap ()
 CMap::~CMap()
 {
 }
-
-/*
- * *************************************CTerrain******************************************
- * */
-/*
- * *************************************CLava******************************************
- * */
-/*
- * *************************************CRoad******************************************
- * */
-/*
- * *************************************CWoods******************************************
- * */
-/*
- * *************************************CCharacter******************************************
- * */
-/*
- * *************************************CWoods******************************************
- * */
-/*CNpc::CNpc( pair<size_t, size_t> pos, int hea, int att )
-        :   CCharacter::CCharacter( pos, hea, att ) {}*/
-/*
- * *************************************CWoods******************************************
- * */
-//CFriend::CFriend( pair<size_t, size_t> pos )
-//        : CNpc ( pos, 100, 5 ) {}
-/*
- * *************************************CWoods******************************************
- * */
-/*
- * *************************************CWoods******************************************
- * */
-/*
- * *************************************CWoods******************************************
- * */
-
 /*
  * *************************************main******************************************
  * */
 int main() {
     cout << "Hello, my Sandbox Game!" << endl;
-    CControlPanel controler;
+    CControlPanel controler ( cout );
     controler . initialize ();
     return 0;
 }
