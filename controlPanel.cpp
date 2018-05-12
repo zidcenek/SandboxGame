@@ -24,11 +24,7 @@ CControlPanel::~CControlPanel()
 }
 bool CControlPanel::initialize (){
     map . load();
-    cout << "How do you want to name your saved game?" << endl;
-    string file;
-    cin >> file;
-    ofstream ofs ( file );
-    map . save( ofs );
+    map . save();
 }
 bool CControlPanel::readChar (){
 

@@ -23,7 +23,6 @@ void CView::unableToSave() {
     cout << "Mistake while saving the game. Try a different filename." << endl;
 }
 
-
 bool CView::print ( ofstream & ofs, const char * str ){
     if ( ! ofs . is_open() )
         return false;

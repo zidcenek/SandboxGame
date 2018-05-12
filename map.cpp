@@ -250,9 +250,15 @@ const char * CMap::printHeader (){
 
 /**
  * saves the game into the relevant file
+ * also checks wheter the mofification of the output file went well
  * @param ofs - file where the game will be saved
  */
-void CMap::save ( ofstream & ofs ){
+void CMap::save (){
+    cout << "How do you want to name your saved game?" << endl;
+    string file;
+    cin >> file;
+    ofstream ofs ( file );
+
     if ( ! view -> print ( ofs, printHeader() ) ) {
         view ->unableToSave();
         return;
@@ -283,7 +289,6 @@ void CMap::save ( ofstream & ofs ){
             return;
         }
     }
-
     for ( auto i = characters . begin () ; i != characters . end () ; ++ i ) {
         if ( ! view -> print ( ofs, "\n" ) ) {
             view -> unableToSave();

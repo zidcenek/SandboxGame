@@ -30,7 +30,7 @@ public:
     bool readCharacterInfo ( ifstream & ifs );
     const char * printHeader ();
     bool load ();
-    void save ( ofstream & ofs );
+    void save ();
     bool addTerrain ( const char & terrain, size_t lineNumber );
     bool addCharacter ( const char & character, size_t lineNumber );
 };
