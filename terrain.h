@@ -16,7 +16,7 @@ protected:
 public:
     CTerrain ();
     virtual ~CTerrain ();
-    virtual void print () const = 0;
+    virtual char print () const = 0;
 };
 
 

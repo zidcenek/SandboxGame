@@ -17,7 +17,10 @@ protected:
 public:
     CView ( ostream & ostr );
     ~CView();
+    void unableToSave ();
     void print ( const char * str );
     void print ( char str );
+    bool print ( ofstream & ofs, const char * str );
+    bool print ( ofstream & ofs, char str );
 };
 #endif //SANDBOXGAME_VIEW_H

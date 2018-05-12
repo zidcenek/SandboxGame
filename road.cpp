@@ -10,6 +10,6 @@ CRoad::CRoad ()
 CRoad::~CRoad ()
 {
 }
-void CRoad::print () const {
-    std::cout << ROAD_SYMBOL;
+char CRoad::print () const {
+    return ROAD_SYMBOL;
 }

@@ -17,7 +17,7 @@ protected:
 public:
     CWoods ();
     ~CWoods ();
-    virtual void print () const;
+    virtual char print () const;
 };
 
 #endif //SANDBOXGAME_WOODS_H

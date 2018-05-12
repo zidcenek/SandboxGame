@@ -32,3 +32,13 @@ const char * CCharacter::printStats () const{
     out . append( "\n" );
     return out . c_str();
 }
+void CCharacter::setHealth ( int hea ){
+    health = hea;
+}
+void CCharacter::setMaxHealth ( int maxHea ){
+    health = maxHea;
+}
+void CCharacter::setAttack ( int att ){
+    health = att;
+}
+

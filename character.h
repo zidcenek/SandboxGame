@@ -25,6 +25,9 @@ public:
     virtual ~CCharacter();
     char showChar () const { return symbol; }
     const char * printStats () const;
+    void setHealth ( int hea );
+    void setMaxHealth ( int maxHea );
+    void setAttack ( int att );
     void setPosition ( size_t x, size_t y );
     pair <size_t, size_t> getPosition () const;
     bool correctPosition ( size_t x, size_t y) const;

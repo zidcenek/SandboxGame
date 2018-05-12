@@ -27,8 +27,10 @@ public:
     bool readHeader ( ifstream & ifs );
     bool readContent ( ifstream & ifs );
     bool readLine ( ifstream & ifs, string & name, size_t & value );
+    bool readCharacterInfo ( ifstream & ifs );
+    const char * printHeader ();
     bool load ();
-    void save ();
+    void save ( ofstream & ofs );
     bool addTerrain ( const char & terrain, size_t lineNumber );
     bool addCharacter ( const char & character, size_t lineNumber );
 };

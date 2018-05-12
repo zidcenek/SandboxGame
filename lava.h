@@ -17,7 +17,7 @@ protected:
 public:
     CLava ();
     ~CLava ();
-    virtual void print () const;
+    virtual char print () const;
 };
 
 #endif //SANDBOXGAME_LAVA_H

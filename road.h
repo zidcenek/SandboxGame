@@ -17,7 +17,7 @@ protected:
 public:
     CRoad ();
     ~CRoad ();
-    virtual void print () const;
+    virtual char print () const;
 };
 
 #endif //SANDBOXGAME_ROAD_H

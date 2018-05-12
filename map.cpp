@@ -43,7 +43,7 @@ bool CMap::load (){
 
     cout << "Enter file name, you want to load" << endl;
     if ( ! ( cin >> srcFile ) )
-        cout << "wrong name" << endl;
+        cout << "wrong file name" << endl;
     ifstream ifs ( srcFile, ios::in );
     if ( ifs . fail () ) {
         cout << "Unable to read the file" << endl;
@@ -55,6 +55,10 @@ bool CMap::load (){
     }
     if ( ! readContent( ifs ) ){
         cout << "Unable to read content" << endl;
+        return false;
+    }
+    if ( ! readCharacterInfo( ifs ) ){
+        cout << "Unable to read character info" << endl;
         return false;
     }
 }
@@ -169,6 +173,40 @@ bool CMap::readContent ( ifstream & ifs ){
     return true;
 }
 /**
+ * reads special character info such as health, attack, etc. ( used while loading a saved game )
+ * @param ifs
+ * @return
+ */
+bool CMap::readCharacterInfo ( ifstream & ifs ) {
+    view -> print ( "readingCharacterInfo\n" );
+    string line;
+    size_t value;
+    size_t coordX;
+    size_t coordY;
+    while ( getline ( ifs, line ) ){
+        if  ( line != "\n" )
+            return false;
+        readLine ( ifs, line, value );
+        if ( ( ! readLine ( ifs, line, coordX ) ) || line != "posiX:" )
+            return false;
+        if ( ( ! readLine ( ifs, line, coordY ) ) || line != "posiY:" )
+            return false;
+        if ( characters_map[ coordX ][ coordY ] == nullptr )
+            return false;
+        if ( ( ! readLine ( ifs, line, value ) ) || line != "healt:" )
+            return false;
+        characters_map[ coordX ][ coordY ] -> setHealth ( (int) value );
+        if ( ( ! readLine ( ifs, line, value ) ) || line != "attac:" )
+            return false;
+        characters_map[ coordX ][ coordY ] -> setAttack ( (int) value );
+        if ( ( ! readLine ( ifs, line, value ) ) || line != "mxhea:" )
+            return false;
+        characters_map[ coordX ][ coordY ] -> setMaxHealth ( (int) value );
+    }
+    return  true;
+}
+
+/**
  * parsing my type of format used when saving the game ( string(5 chars):size_t )
  * @param ifs - ifstream
  * @param name - return parameter specifing name of the line ( width, height etc. )
@@ -181,26 +219,80 @@ bool CMap::readLine ( ifstream & ifs, string & name, size_t & value ) {
     getline (ifs, line );
     name = line . substr ( 0, 6 );
     line . erase ( 0, 6 );
-    value = stoi ( line, &sz );
+    try {
+        value = (unsigned)stoi(line, &sz);
+    }catch ( exception e ){
+        return false;
+    }
     line . erase ( 0, sz );
     if ( line != "") // wheter there is any junk
         return false;
     return true;
 }
-void CMap::save (){
+
+/**
+ * prints a header of the map required for saving the game
+ * @return - returns a string that can be further printed to file / console...
+ */
+const char * CMap::printHeader (){
+    string out;
+    out . append ( "width:" );
+    out . append ( to_string( width ) );
+    out . append ( "\n" );
+    out . append ( "heigh:" );
+    out . append ( to_string( height ) );
+    out . append ( "\n" );
+    out . append ( "moves:" );
+    out . append ( to_string( moves ) );
+    out . append ( "\n" );
+    return out . c_str ();
+}
+
+/**
+ * saves the game into the relevant file
+ * @param ofs - file where the game will be saved
+ */
+void CMap::save ( ofstream & ofs ){
+    if ( ! view -> print ( ofs, printHeader() ) ) {
+        view ->unableToSave();
+        return;
+    }
     for ( size_t i = 0 ; i < width ; i ++ ) {
         for (size_t j = 0; j < height; j++) {
-            terrain_map[i][j]->print();
-            if ( characters_map[i][j] == nullptr )
-                view -> print ( '_' );
-            else
-                view -> print ( characters_map[i][j] -> showChar() );
-            view -> print( " " );
+            view -> print ( ofs, terrain_map[i][j] -> print () );
+            if ( characters_map[i][j] == nullptr ){
+                if ( ! view -> print ( ofs ,'_' ) ) {
+                    view -> unableToSave();
+                    return;
+                }
+            }
+            else {
+                if ( ! view -> print ( ofs, characters_map[i][j] -> showChar() ) ) {
+                    view -> unableToSave();
+                    return;
+                }
+            }
+            if ( ! view -> print( ofs,  " " ) ) {
+                view -> unableToSave();
+                return;
+            }
         }
-        view -> print ( "\n" );
+
+        if ( ! view -> print( ofs,  "\n" ) ) {
+            view -> unableToSave();
+            return;
+        }
     }
+
     for ( auto i = characters . begin () ; i != characters . end () ; ++ i ) {
-        view -> print ( "\n" );
-        view->print((*i)->printStats());
+        if ( ! view -> print ( ofs, "\n" ) ) {
+            view -> unableToSave();
+            return;
+        }
+        if ( ! view -> print ( ofs, (*i) -> printStats () ) ) {
+            view -> unableToSave();
+            return;
+        }
     }
+    ofs . close();
 }

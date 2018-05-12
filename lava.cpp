@@ -3,6 +3,7 @@
 //
 
 #include "lava.h"
+using namespace std;
 
 CLava::CLava()
 {
@@ -10,7 +11,7 @@ CLava::CLava()
 CLava::~CLava()
 {
 }
-void CLava::print () const {
-    std::cout << LAVA_SYMBOL;
+char CLava::print () const {
+    return LAVA_SYMBOL;
 }
 
