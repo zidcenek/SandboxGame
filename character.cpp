@@ -41,4 +41,11 @@ void CCharacter::setMaxHealth ( int maxHea ){
 void CCharacter::setAttack ( int att ){
     health = att;
 }
+void CCharacter::setPosition(size_t x, size_t y) {
+    position . first = x;
+    position . second = y;
+}
 
+pair <size_t, size_t> CCharacter::getPosition () const{
+    return position;
+};

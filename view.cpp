@@ -13,6 +13,10 @@ CView::CView ( ostream & ostr )
 CView::~CView()
 {
 }
+void CView::invalidKey () {
+    cout << "You pressed an invalid key, please try again" << endl;
+}
+
 void CView::print ( const char * str ) {
     cout << str;
 }
@@ -38,4 +42,20 @@ bool CView::print ( ofstream & ofs, char str ){
     if (!ofs.good())
         return false;
     return true;
+}
+void CView::showMenu() {
+    cout << "[l] load game" << endl
+         << "[q] quit" << endl;
+}
+void CView::showPossibilities (){
+    cout << "[m] main menu" << endl
+         << "[u] save game" << endl
+         << "[w] move up" << endl
+         << "[s] move down" << endl
+         << "[a] move left" << endl
+         << "[d] move right" << endl;
+}
+
+void CView::cannotMoveThere (){
+    cout << "You cannot move there." << endl;
 }

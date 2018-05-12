@@ -18,7 +18,6 @@ using namespace std;
 int main() {
     cout << "Hello, my Sandbox Game!" << endl;
     CView view ( cout );
-    view . print ( "main" );
     CControlPanel controler ( cout );
     controler . initialize ();
     return 0;

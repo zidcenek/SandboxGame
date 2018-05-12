@@ -18,6 +18,10 @@ public:
     CView ( ostream & ostr );
     ~CView();
     void unableToSave ();
+    void invalidKey ();
+    void showPossibilities ();
+    void cannotMoveThere();
+    void showMenu ();
     void print ( const char * str );
     void print ( char str );
     bool print ( ofstream & ofs, const char * str );

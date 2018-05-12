@@ -16,7 +16,6 @@ class CControlPanel {
 protected:
     size_t width;
     size_t height;
-    int moves;
     CMap map;
     vector <CCharacter*> characters;
     CView * view;

@@ -33,6 +33,12 @@ public:
     void save ();
     bool addTerrain ( const char & terrain, size_t lineNumber );
     bool addCharacter ( const char & character, size_t lineNumber );
+    bool correctPosition ( size_t x, size_t y );
+    void move ( size_t x, size_t y );
+    const char * printMap ();
+    void increasesMoves ();
+    void decreaseMoves ();
+    const char * showCounter();
 };
 
 #endif //SANDBOXGAME_MAP_H

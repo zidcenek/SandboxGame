@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <string>
+#include <sstream>
 
 #include "character.h"
 #include "map.h"
@@ -43,24 +44,25 @@ bool CMap::load (){
 
     cout << "Enter file name, you want to load" << endl;
     if ( ! ( cin >> srcFile ) )
-        cout << "wrong file name" << endl;
+        view -> print ( "wrong file name\n" );
     ifstream ifs ( srcFile, ios::in );
     if ( ifs . fail () ) {
-        cout << "Unable to read the file" << endl;
+        view -> print ( "Unable to read the file\n" );
         return false;
     }
     if ( ! readHeader( ifs ) ){
-        cout << "Unable to read header" << endl;
+        view -> print ( "Unable to read header\n" );
         return false;
     }
     if ( ! readContent( ifs ) ){
-        cout << "Unable to read content" << endl;
+        view -> print ( "Unable to read content" );
         return false;
     }
     if ( ! readCharacterInfo( ifs ) ){
-        cout << "Unable to read character info" << endl;
+        view -> print ( "Unable to read character info" );
         return false;
     }
+    return true;
 }
 
 /**
@@ -183,10 +185,12 @@ bool CMap::readCharacterInfo ( ifstream & ifs ) {
     size_t value;
     size_t coordX;
     size_t coordY;
-    while ( getline ( ifs, line ) ){
-        if  ( line != "\n" )
+    int counter = 0;
+    while ( getline ( ifs, line ) . good () ){
+        if ( ifs . eof () )
+            break;
+        if  ( line != "" )
             return false;
-        readLine ( ifs, line, value );
         if ( ( ! readLine ( ifs, line, coordX ) ) || line != "posiX:" )
             return false;
         if ( ( ! readLine ( ifs, line, coordY ) ) || line != "posiY:" )
@@ -202,6 +206,7 @@ bool CMap::readCharacterInfo ( ifstream & ifs ) {
         if ( ( ! readLine ( ifs, line, value ) ) || line != "mxhea:" )
             return false;
         characters_map[ coordX ][ coordY ] -> setMaxHealth ( (int) value );
+
     }
     return  true;
 }
@@ -263,31 +268,9 @@ void CMap::save (){
         view ->unableToSave();
         return;
     }
-    for ( size_t i = 0 ; i < width ; i ++ ) {
-        for (size_t j = 0; j < height; j++) {
-            view -> print ( ofs, terrain_map[i][j] -> print () );
-            if ( characters_map[i][j] == nullptr ){
-                if ( ! view -> print ( ofs ,'_' ) ) {
-                    view -> unableToSave();
-                    return;
-                }
-            }
-            else {
-                if ( ! view -> print ( ofs, characters_map[i][j] -> showChar() ) ) {
-                    view -> unableToSave();
-                    return;
-                }
-            }
-            if ( ! view -> print( ofs,  " " ) ) {
-                view -> unableToSave();
-                return;
-            }
-        }
-
-        if ( ! view -> print( ofs,  "\n" ) ) {
-            view -> unableToSave();
-            return;
-        }
+    if ( ! view -> print ( ofs, printMap() ) ){
+        view -> unableToSave();
+        return;
     }
     for ( auto i = characters . begin () ; i != characters . end () ; ++ i ) {
         if ( ! view -> print ( ofs, "\n" ) ) {
@@ -300,4 +283,60 @@ void CMap::save (){
         }
     }
     ofs . close();
+}
+
+/**
+ * checks wheter the position is correct or not
+ * @param x - represents parameter compared with width
+ * @param y - represents parameter compared with height
+ * @return
+ */
+bool CMap::correctPosition( size_t x, size_t y ) {
+    if ( x >= height || y >= width )
+        return false;
+    return true;
+}
+
+void CMap::move ( size_t x, size_t y ){
+    pair <size_t, size_t> position = characters[0] -> getPosition();
+    if ( ! correctPosition( position . first + x, position . second + y ) ) {
+        view -> cannotMoveThere ();
+        return;
+    }
+    CCharacter * tmp = characters_map[position . first + x][position . second + y];
+    characters_map[position . first + x][position . second + y] = characters[0];
+    characters_map[position . first][position . second] = tmp;
+    characters[0] -> setPosition( position . first + x, position . second + y );
+    increasesMoves();
+}
+
+/**
+ * prints the map into a string
+ * @return
+ */
+const char * CMap::printMap () {
+    stringstream strs;
+
+    for ( size_t i = 0; i < width; i++ ) {
+        for ( size_t j = 0; j < height; j++ ) {
+            strs << terrain_map[i][j] -> print();
+            if ( characters_map[i][j] == nullptr )
+                strs << '_' ;
+            else
+                strs <<  characters_map[i][j] -> showChar();
+            strs <<  " ";
+        }
+        strs << "\n";
+    }
+    return strs . str () . c_str();
+}
+
+void CMap::increasesMoves (){
+    moves ++;
+}
+void CMap::decreaseMoves (){
+    moves --;
+}
+const char * CMap::showCounter() {
+    return to_string( moves ) . append ("\n") . c_str();
 }

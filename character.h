@@ -28,8 +28,8 @@ public:
     void setHealth ( int hea );
     void setMaxHealth ( int maxHea );
     void setAttack ( int att );
-    void setPosition ( size_t x, size_t y );
     pair <size_t, size_t> getPosition () const;
+    void setPosition ( size_t x, size_t y );
     bool correctPosition ( size_t x, size_t y) const;
     void recieveDmg ( int damage );
     void heal ( int health );
