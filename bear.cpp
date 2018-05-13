@@ -11,3 +11,10 @@ CBear::CBear ( pair<size_t, size_t> pos )
 CBear::~CBear()
 {
 }
+/**
+ * while interacting with another character, there is some chance on special attack
+ * @return
+ */
+void CBear::specialAttack () const{
+
+}

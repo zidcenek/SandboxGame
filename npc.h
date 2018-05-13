@@ -8,7 +8,7 @@
 
 using namespace std;
 
-/*
+/**
  * parent of non player characters ( friendly and enemy characters )
  */
 class CNpc : public CCharacter {

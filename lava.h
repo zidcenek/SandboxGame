@@ -9,7 +9,7 @@
 
 const char LAVA_SYMBOL = 'L';
 
-/*
+/**
  * Class representing lava ( specific symbol L )
  */
 class CLava : public CTerrain {
@@ -18,6 +18,7 @@ public:
     CLava ();
     ~CLava ();
     virtual char print () const;
+    virtual void interact () const;
 };
 
 #endif //SANDBOXGAME_LAVA_H

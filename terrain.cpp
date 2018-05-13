@@ -12,3 +12,9 @@ CTerrain::CTerrain ()
 CTerrain::~CTerrain ()
 {
 }
+/**
+ * iteract will not do anything unless explicitly said
+ */
+void CTerrain::interact() const {
+
+}

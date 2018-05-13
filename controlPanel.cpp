@@ -21,7 +21,11 @@ CControlPanel::CControlPanel ( ostream & os )
 CControlPanel::~CControlPanel()
 {
 }
-bool CControlPanel::initialize (){
+/**
+ * initializes player's gaming experience ( shows main menu, etc )
+ * @return
+ */
+void CControlPanel::initialize (){
     char pressedKey;
     bool play = false;
     //map . save ();

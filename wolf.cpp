@@ -12,3 +12,10 @@ CWolf::CWolf ( pair<size_t, size_t> pos )
 CWolf::~CWolf()
 {
 }
+/**
+ * while interacting with another character, there is some chance on special attack
+ * @return
+ */
+void CWolf::specialAttack () const{
+
+}

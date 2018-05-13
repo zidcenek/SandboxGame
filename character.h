@@ -9,7 +9,7 @@
 #include <utility>
 using namespace std;
 
-/*
+/**
  * parent of all characters
  * holds the most impornant attributes ( health, attack )
  */

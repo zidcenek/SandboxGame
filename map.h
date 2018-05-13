@@ -10,7 +10,9 @@
 #include <vector>
 
 using namespace std;
-
+/**
+ * represents map, holds all the character and terrain info
+ */
 class CMap {
 protected:
     size_t width;
@@ -23,7 +25,6 @@ protected:
 public:
     CMap ( CView * myview );
     ~CMap();
-
     bool readHeader ( ifstream & ifs );
     bool readContent ( ifstream & ifs );
     bool readLine ( ifstream & ifs, string & name, size_t & value );

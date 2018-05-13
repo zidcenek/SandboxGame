@@ -9,7 +9,7 @@
 
 using namespace std;
 
-/*
+/**
  * parent of all enemy monsters
  */
 class CMonster : public CNpc {
@@ -17,6 +17,7 @@ protected:
 public:
     CMonster ( pair<size_t, size_t> pos, int hea, int att, const char & sym  );
     virtual ~CMonster();
+    virtual void specialAttack () const = 0;
 };
 
 #endif //SANDBOXGAME_MONSTER_H

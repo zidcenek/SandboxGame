@@ -9,7 +9,7 @@
 
 const char WOODS_SYMBOL = 'W';
 
-/*
+/**
  * Class representing forest ( specific symbol W )
  */
 class CWoods : public CTerrain {
@@ -18,6 +18,7 @@ public:
     CWoods ();
     ~CWoods ();
     virtual char print () const;
+    virtual void interact () const;
 };
 
 #endif //SANDBOXGAME_WOODS_H

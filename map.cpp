@@ -296,7 +296,11 @@ bool CMap::correctPosition( size_t x, size_t y ) {
         return false;
     return true;
 }
-
+/**
+ * swaps player with another character ( usually nullpointer )
+ * @param x - where to move horizontally
+ * @param y - where to move vertically
+ */
 void CMap::move ( size_t x, size_t y ){
     pair <size_t, size_t> position = characters[0] -> getPosition();
     if ( ! correctPosition( position . first + x, position . second + y ) ) {
@@ -337,6 +341,10 @@ void CMap::increasesMoves (){
 void CMap::decreaseMoves (){
     moves --;
 }
+/**
+ * returns a string saying how many moves have been done
+ * @return
+ */
 const char * CMap::showCounter() {
     return to_string( moves ) . append ("\n") . c_str();
 }

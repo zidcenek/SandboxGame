@@ -11,6 +11,9 @@
 
 using namespace std;
 
+/**
+ * takes care of showing and printing everythigh to a ostream ( ofstream )
+ */
 class CView {
 protected:
     ostream & os;

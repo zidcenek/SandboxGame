@@ -14,4 +14,9 @@ CLava::~CLava()
 char CLava::print () const {
     return LAVA_SYMBOL;
 }
+/**
+ * deals damage to a character that stands on this terrain
+ */
+void CLava::interact() const {
 
+}

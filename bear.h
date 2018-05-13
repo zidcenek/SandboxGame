@@ -13,7 +13,7 @@ const int BEAR_HEALTH = 50;
 const int BEAR_ATTACK = 15;
 const char BEAR_SYMBOL = 'B';
 
-/*
+/**
  * class representing specific monster - bear ( symbol B )
  */
 class CBear : public CMonster {
@@ -21,6 +21,7 @@ protected:
 public:
     CBear ( pair<size_t, size_t> pos );
     ~CBear();
+    virtual void specialAttack () const;
 };
 
 

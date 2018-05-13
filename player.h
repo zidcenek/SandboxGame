@@ -8,13 +8,14 @@
 
 const char PLAYER_SYMBOL = 'P';
 
-/*
+/**
  * class representing Player ( user ) ( specific symbol P )
  */
 class CPlayer : public CCharacter {
 protected:
 public:
     CPlayer ( pair<size_t, size_t> pos, int hea, int att );
+    void interactWithTerrain ();
 };
 
 #endif //SANDBOXGAME_PLAYER_H

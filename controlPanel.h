@@ -11,7 +11,9 @@
 #include "map.h"
 #include "view.h"
 using namespace std;
-
+/**
+ * takes care about playing the game
+ */
 class CControlPanel {
 protected:
     size_t width;
@@ -23,7 +25,7 @@ public:
     CControlPanel ( ostream & os );
     ~CControlPanel();
     bool readChar ();
-    bool initialize ();
+    void initialize ();
 };
 
 #endif //SANDBOXGAME_CONTROLPANEL_H
