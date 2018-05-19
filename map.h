@@ -29,17 +29,20 @@ public:
     bool readContent ( ifstream & ifs );
     bool readLine ( ifstream & ifs, string & name, size_t & value );
     bool readCharacterInfo ( ifstream & ifs );
-    const char * printHeader ();
+    string printHeader ();
     bool load ();
     void save ();
     bool addTerrain ( const char & terrain, size_t lineNumber );
     bool addCharacter ( const char & character, size_t lineNumber );
     bool correctPosition ( size_t x, size_t y );
     void move ( size_t x, size_t y );
-    const char * printMap ();
+    string printMap ();
     void increasesMoves ();
     void decreaseMoves ();
-    const char * showCounter();
+    string showCounter();
+    void clean ();
+    bool loseTheGame ();
+    CCharacter * getPlayer () const;
 };
 
 #endif //SANDBOXGAME_MAP_H

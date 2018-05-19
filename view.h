@@ -26,8 +26,10 @@ public:
     void cannotMoveThere();
     void showMenu ();
     void print ( const char * str );
+    void print ( string str );
     void print ( char str );
     bool print ( ofstream & ofs, const char * str );
     bool print ( ofstream & ofs, char str );
+    bool print ( ofstream & ofs, string str );
 };
 #endif //SANDBOXGAME_VIEW_H

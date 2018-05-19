@@ -1,9 +1,0 @@
-width:5
-height:5
-moves:0
-
-RP R_ R_ R_ RB
-W_ W_ W_ W_ W_ 
-W_ W_ L_ L_ L_
-WB W_ L_ L_ L_
-W_ L_ L_ L_ L_

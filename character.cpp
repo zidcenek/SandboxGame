@@ -25,7 +25,7 @@ CCharacter::~CCharacter()
  * prints stats of a single character - used when saving the game
  * @return
  */
-const char * CCharacter::printStats () const{
+string CCharacter::printStats () const{
     string out;
     out . append ( "posiX:" );
     out . append ( to_string( position . first ) );
@@ -42,7 +42,7 @@ const char * CCharacter::printStats () const{
     out . append ( "mxhea:" );
     out . append ( to_string( max_health ) );
     out . append( "\n" );
-    return out . c_str();
+    return out;
 }
 void CCharacter::setHealth ( int hea ){
     health = hea;
@@ -51,7 +51,7 @@ void CCharacter::setMaxHealth ( int maxHea ){
     health = maxHea;
 }
 void CCharacter::setAttack ( int att ){
-    health = att;
+    attack = att;
 }
 void CCharacter::setPosition(size_t x, size_t y) {
     position . first = x;
@@ -60,3 +60,34 @@ void CCharacter::setPosition(size_t x, size_t y) {
 pair <size_t, size_t> CCharacter::getPosition () const{
     return position;
 };
+string CCharacter::showStats() const {
+    string out;
+    out . append ( "Health: ");
+    out . append( to_string( health ) ) . append ( " / " );
+    out . append( to_string( max_health ) );
+    out . append( "\nAttack: " );
+    out . append( to_string( attack ) );
+    out . append( "\n" );
+    return out;
+}
+
+void CCharacter::interaction ( CCharacter * attacker ) {
+    recieveDmg ( attacker -> getAttack() );
+    attacker -> recieveDmg ( getAttack() );
+}
+void CCharacter::recieveDmg ( int damage ){
+    health -= damage;
+}
+
+int CCharacter::getMax_health() const {
+    return max_health;
+}
+
+int CCharacter::getHealth() const {
+    return health;
+}
+
+int CCharacter::getAttack() const {
+    return attack;
+}
+

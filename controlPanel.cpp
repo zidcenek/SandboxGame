@@ -20,6 +20,7 @@ CControlPanel::CControlPanel ( ostream & os )
  */
 CControlPanel::~CControlPanel()
 {
+    delete view;
 }
 /**
  * initializes player's gaming experience ( shows main menu, etc )
@@ -39,29 +40,33 @@ void CControlPanel::initialize (){
             while ( ! map . load () ){}
             play = true;
         }
-        while ( play ){
-            cin . clear ();
-            view -> print ( map . printMap() );
-            view -> print ( map . showCounter() );
-            view -> showPossibilities();
-            cin >> pressedKey;
-            switch ( pressedKey ){
-                case 'w' : map . move ( -1, 0 );
-                break;
-                case 's' : map . move ( 1, 0 );
-                break;
-                case 'a' : map . move ( 0, -1 );
-                break;
-                case 'd' : map . move ( 0, 1 );
-                break;
-                case 'u' : map . save ();
-                break;
-                case 'm' : play = false;
-                break;
-                default  :
-                    view -> invalidKey ();
+            while ( play ){
+                cin . clear ();
+                view -> print ( map . printMap() );
+                view -> print ( map . showCounter() );
+                view -> print ( map . getPlayer() -> showStats () );
+                view -> showPossibilities();
+                cin >> pressedKey;
+                switch ( pressedKey ){
+                    case 'w' : map . move ( -1, 0 );
+                    break;
+                    case 's' : map . move ( 1, 0 );
+                    break;
+                    case 'a' : map . move ( 0, -1 );
+                    break;
+                    case 'd' : map . move ( 0, 1 );
+                    break;
+                    case 'u' : map . save ();
+                    break;
+                    case 'm' : play = false;
+                    break;
+                    default  :
+                        view -> invalidKey ();
+                }
+                if ( map . loseTheGame () )
+                    play = false;
             }
-        }
+        map . clean();
         }
 }
 bool CControlPanel::readChar (){

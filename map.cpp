@@ -28,11 +28,17 @@ CMap::CMap ( CView * myview )
             view ( view )
 {
 }
+
 /**
  * destructor
  */
 CMap::~CMap()
 {
+    for ( auto i = terrain_map . begin () ; i != terrain_map . end () ; ++ i )
+        for ( auto j = i -> begin () ; j != i -> end () ; ++ j )
+            delete *j;
+    for ( auto i = characters . begin () ; i != characters . end () ; ++i )
+        delete *i;
 }
 
 /**
@@ -239,7 +245,7 @@ bool CMap::readLine ( ifstream & ifs, string & name, size_t & value ) {
  * prints a header of the map required for saving the game
  * @return - returns a string that can be further printed to file / console...
  */
-const char * CMap::printHeader (){
+string CMap::printHeader (){
     string out;
     out . append ( "width:" );
     out . append ( to_string( width ) );
@@ -250,7 +256,7 @@ const char * CMap::printHeader (){
     out . append ( "moves:" );
     out . append ( to_string( moves ) );
     out . append ( "\n" );
-    return out . c_str ();
+    return out;
 }
 
 /**
@@ -296,6 +302,7 @@ bool CMap::correctPosition( size_t x, size_t y ) {
         return false;
     return true;
 }
+
 /**
  * swaps player with another character ( usually nullpointer )
  * @param x - where to move horizontally
@@ -307,9 +314,23 @@ void CMap::move ( size_t x, size_t y ){
         view -> cannotMoveThere ();
         return;
     }
-    CCharacter * tmp = characters_map[position . first + x][position . second + y];
+    CCharacter * player = characters[0];
+    CCharacter * enemy = characters_map[position . first + x][position . second + y];
+    if ( characters_map[position . first + x][position . second + y] != nullptr )
+    {
+        characters[0] -> interaction( enemy );
+        if ( player -> stillAlive() == nullptr )
+            player = nullptr;
+        if ( enemy -> stillAlive() == nullptr ) {
+            enemy = nullptr;
+            for ( auto i = characters . begin () ; i != characters . end () ; ++ i )
+                if ( *i == nullptr )
+                    characters . erase ( i );
+        }
+        return;
+    }
     characters_map[position . first + x][position . second + y] = characters[0];
-    characters_map[position . first][position . second] = tmp;
+    characters_map[position . first][position . second] = enemy;
     characters[0] -> setPosition( position . first + x, position . second + y );
     increasesMoves();
 }
@@ -318,7 +339,7 @@ void CMap::move ( size_t x, size_t y ){
  * prints the map into a string
  * @return
  */
-const char * CMap::printMap () {
+string CMap::printMap () {
     stringstream strs;
 
     for ( size_t i = 0; i < width; i++ ) {
@@ -332,7 +353,7 @@ const char * CMap::printMap () {
         }
         strs << "\n";
     }
-    return strs . str () . c_str();
+    return strs . str ();
 }
 
 void CMap::increasesMoves (){
@@ -345,6 +366,34 @@ void CMap::decreaseMoves (){
  * returns a string saying how many moves have been done
  * @return
  */
-const char * CMap::showCounter() {
-    return to_string( moves ) . append ("\n") . c_str();
+string CMap::showCounter() {
+    string out = "moves: ";
+    out . append ( to_string( moves ) ) . append ("\n");
+    return out;
+}
+/**
+ * cleans after itself - clears vectors
+ */
+void CMap::clean() {
+    width = 0;
+    height = 0;
+    moves = 0;
+    for ( auto i = terrain_map . begin () ; i != terrain_map . end () ; ++ i )
+        for ( auto j = i -> begin () ; j != i -> end () ; ++ j )
+            delete *j;
+    for ( auto i = characters . begin () ; i != characters . end () ; ++i )
+        delete *i;
+    characters_map . clear ();
+    terrain_map . clear ();
+    characters . clear ();
+}
+
+CCharacter * CMap::getPlayer () const{
+    return characters[0];
+}
+
+bool CMap::loseTheGame() {
+    if ( characters[0] == nullptr )
+        return true;
+    return false;
 }

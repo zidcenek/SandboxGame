@@ -16,6 +16,7 @@ protected:
 public:
     CNpc ( pair<size_t, size_t> pos, int hea, int att, const char & sym );
     virtual ~CNpc();
+    virtual CCharacter * stillAlive ();
     //virtual void interact ();
 };
 
