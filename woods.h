@@ -18,7 +18,7 @@ public:
     CWoods ();
     ~CWoods ();
     virtual char print () const;
-    virtual void interact () const;
+    virtual string interact ( CCharacter * character ) const;
 };
 
 #endif //SANDBOXGAME_WOODS_H

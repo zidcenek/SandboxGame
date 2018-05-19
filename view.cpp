@@ -89,3 +89,9 @@ void CView::showPossibilities (){
 void CView::cannotMoveThere (){
     cout << "You cannot move there." << endl;
 }
+
+void CView::lostTheGame () {
+    cout << "-----------------------" << endl;
+    cout << "You have lost the game." << endl;
+    cout << "-----------------------" << endl;
+}

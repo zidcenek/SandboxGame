@@ -61,11 +61,11 @@ bool CMap::load (){
         return false;
     }
     if ( ! readContent( ifs ) ){
-        view -> print ( "Unable to read content" );
+        view -> print ( "Unable to read content\n" );
         return false;
     }
     if ( ! readCharacterInfo( ifs ) ){
-        view -> print ( "Unable to read character info" );
+        view -> print ( "Unable to read character info\n" );
         return false;
     }
     return true;
@@ -94,16 +94,21 @@ bool CMap::addTerrain ( const char & terrain, size_t lineNumber ) {
 }
 
 /**
- * parses specific characters and creates objects if possible
+ * parses specific characters and creates objects if possible ( player is put on the beginning of the character vector )
  * @param character - character representing a specific type of character
  * @param lineNumber - what line is the program supposed to modify
  * @return
  */
 bool CMap::addCharacter ( const char & character, size_t lineNumber ) {
     CCharacter * tmp;
+    bool playerFlag = false;
     pair<size_t, size_t> pos = make_pair( lineNumber, characters_map[lineNumber] . size() );
     switch ( character ){
         case 'P' : tmp = new CPlayer ( pos, 100, 5 );
+                   playerFlag = true;
+                   if ( ! characters . empty () )
+                       if ( characters[0] -> getSymbol() == PLAYER_SYMBOL )
+                           return false;
             break;
         case 'F' : tmp = new CFriend ( pos );
             break;
@@ -116,8 +121,12 @@ bool CMap::addCharacter ( const char & character, size_t lineNumber ) {
         default  :
             return false;
     }
-    if ( tmp != nullptr )
+    /* makes sure Player  */
+    if ( playerFlag )
+        characters . insert( characters . begin () , tmp );
+    else if ( tmp != nullptr )
         characters . push_back( tmp );
+
     characters_map[ lineNumber ] . push_back( tmp );
     return true;
 }
@@ -201,7 +210,7 @@ bool CMap::readCharacterInfo ( ifstream & ifs ) {
             return false;
         if ( ( ! readLine ( ifs, line, coordY ) ) || line != "posiY:" )
             return false;
-        if ( characters_map[ coordX ][ coordY ] == nullptr )
+        if ( characters_map[ coordX ][ coordY ] == nullptr || ! correctPosition( coordX, coordY ) )
             return false;
         if ( ( ! readLine ( ifs, line, value ) ) || line != "healt:" )
             return false;
@@ -318,15 +327,17 @@ void CMap::move ( size_t x, size_t y ){
     CCharacter * enemy = characters_map[position . first + x][position . second + y];
     if ( characters_map[position . first + x][position . second + y] != nullptr )
     {
-        characters[0] -> interaction( enemy );
-        if ( player -> stillAlive() == nullptr )
-            player = nullptr;
-        if ( enemy -> stillAlive() == nullptr ) {
-            enemy = nullptr;
+        getPlayer() -> interaction( enemy );
+        if ( ! enemy -> stillAlive() ) {
             for ( auto i = characters . begin () ; i != characters . end () ; ++ i )
-                if ( *i == nullptr )
-                    characters . erase ( i );
+                if ( *i == enemy ) {
+                    characters . erase( i );
+                    delete enemy;
+                    characters_map[position . first + x][position . second + y] = nullptr;
+                    return;
+                }
         }
+        /* when player interacts with another character, he stays in the same position */
         return;
     }
     characters_map[position . first + x][position . second + y] = characters[0];
@@ -341,7 +352,6 @@ void CMap::move ( size_t x, size_t y ){
  */
 string CMap::printMap () {
     stringstream strs;
-
     for ( size_t i = 0; i < width; i++ ) {
         for ( size_t j = 0; j < height; j++ ) {
             strs << terrain_map[i][j] -> print();
@@ -373,6 +383,7 @@ string CMap::showCounter() {
 }
 /**
  * cleans after itself - clears vectors
+ * used so a different game was able to be loaded
  */
 void CMap::clean() {
     width = 0;
@@ -393,7 +404,18 @@ CCharacter * CMap::getPlayer () const{
 }
 
 bool CMap::loseTheGame() {
-    if ( characters[0] == nullptr )
-        return true;
-    return false;
+    return ! characters[0] -> stillAlive();
+}
+
+/**
+ * makes every character interact with terrain which they stand on
+ */
+void CMap::terrainInteraction () const {
+    pair <size_t, size_t> positon = characters[0] -> getPosition();
+    view -> print( terrain_map[positon . first][positon . second] -> interact( characters[0] ) );
+    /* Wheter non-player characters should interact with terrain as well. */
+    /*for ( auto i =  ( ++ characters . begin () ) ; i != characters . end () ; ++ i ) {
+        positon = (*i) -> getPosition();
+        terrain_map[positon . first][positon . second] -> interact( *i );
+    }*/
 }

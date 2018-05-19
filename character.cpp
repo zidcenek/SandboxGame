@@ -48,7 +48,7 @@ void CCharacter::setHealth ( int hea ){
     health = hea;
 }
 void CCharacter::setMaxHealth ( int maxHea ){
-    health = maxHea;
+    max_health = maxHea;
 }
 void CCharacter::setAttack ( int att ){
     attack = att;
@@ -90,4 +90,12 @@ int CCharacter::getHealth() const {
 int CCharacter::getAttack() const {
     return attack;
 }
+void CCharacter::heal( int heal ) {
+    health += heal;
+    if ( health > max_health )
+        health = max_health;
+}
 
+char CCharacter::getSymbol() const {
+    return symbol;
+}

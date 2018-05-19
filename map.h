@@ -43,6 +43,7 @@ public:
     void clean ();
     bool loseTheGame ();
     CCharacter * getPlayer () const;
+    void terrainInteraction () const;
 };
 
 #endif //SANDBOXGAME_MAP_H

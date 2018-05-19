@@ -25,6 +25,7 @@ public:
     void showPossibilities ();
     void cannotMoveThere();
     void showMenu ();
+    void lostTheGame ();
     void print ( const char * str );
     void print ( string str );
     void print ( char str );

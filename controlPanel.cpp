@@ -63,8 +63,11 @@ void CControlPanel::initialize (){
                     default  :
                         view -> invalidKey ();
                 }
-                if ( map . loseTheGame () )
+                map . terrainInteraction ();
+                if ( map . loseTheGame () ) {
+                    view -> lostTheGame ();
                     play = false;
+                }
             }
         map . clean();
         }

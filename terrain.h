@@ -6,6 +6,8 @@
 #define SANDBOXGAME_TERRAIN_H
 
 #include <iostream>
+#include <cstdlib>
+#include "character.h"
 /**
  * parent to all terrains
  * #name -> represents symbol used by specific types of terrain
@@ -17,7 +19,7 @@ public:
     CTerrain ();
     virtual ~CTerrain ();
     virtual char print () const = 0;
-    virtual void interact () const;
+    virtual string interact ( CCharacter * character ) const;
 };
 
 

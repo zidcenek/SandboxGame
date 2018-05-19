@@ -11,7 +11,7 @@ using namespace std;
 
 /**
  * parent of all characters
- * holds the most impornant attributes ( health, attack )
+ * holds the most important attributes ( health, attack )
  */
 class CCharacter {
 protected:
@@ -24,11 +24,10 @@ public:
     int getMax_health() const;
     int getHealth() const;
     int getAttack() const;
+    char getSymbol() const;
     void setHealth ( int hea );
     void setMaxHealth ( int maxHea );
     void setAttack ( int att );
-
-public:
     CCharacter ( pair<size_t, size_t> pos, int hea, int att, char sym );
     virtual ~CCharacter();
     char showChar () const { return symbol; }
@@ -37,10 +36,9 @@ public:
     void setPosition ( size_t x, size_t y );
     virtual string showStats () const;
     void interaction ( CCharacter * attacker );
-    virtual CCharacter * stillAlive () = 0;
-    bool correctPosition ( size_t x, size_t y) const;
+    virtual bool stillAlive () = 0;
     void recieveDmg ( int damage );
-    void heal ( int health );
+    void heal ( int heal );
 };
 
 #endif //SANDBOXGAME_CHARACTER_H

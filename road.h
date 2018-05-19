@@ -18,6 +18,7 @@ public:
     CRoad ();
     ~CRoad ();
     virtual char print () const;
+    virtual string interact ( CCharacter * character ) const;
 };
 
 #endif //SANDBOXGAME_ROAD_H

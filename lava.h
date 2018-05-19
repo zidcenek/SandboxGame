@@ -18,7 +18,7 @@ public:
     CLava ();
     ~CLava ();
     virtual char print () const;
-    virtual void interact () const;
+    virtual string interact ( CCharacter * character ) const;
 };
 
 #endif //SANDBOXGAME_LAVA_H

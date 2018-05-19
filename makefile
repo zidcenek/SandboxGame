@@ -8,7 +8,7 @@ sandboxGame: main.o bear.o friend.o lava.o npc.o road.o view.o woods.o character
 	$(LD) -o $@ $^
 
 clean:
-	rm -f bear.o friend.o lava.o npc.o road.o view.o woods.o character.o monster.o player.o terrain.o wolf.o controlPanel.o map.o main.o
+	rm -f bear.o friend.o lava.o npc.o road.o view.o woods.o character.o monster.o player.o terrain.o wolf.o controlPanel.o map.o main.o sandboxGame
 
 %o: %cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<

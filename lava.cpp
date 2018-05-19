@@ -17,6 +17,7 @@ char CLava::print () const {
 /**
  * deals damage to a character that stands on this terrain
  */
-void CLava::interact() const {
-
+string CLava::interact ( CCharacter * character ) const {
+    character -> recieveDmg( 10 );
+    return "Lava burned you, you have recieved 10 damage.\n";
 }
