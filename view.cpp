@@ -95,3 +95,11 @@ void CView::lostTheGame () {
     cout << "You have lost the game." << endl;
     cout << "-----------------------" << endl;
 }
+
+void CView::victory() {
+    cout << "-----------------------" << endl;
+    cout << "Congratulations! You have found the treasure and won the game!" << endl;
+    cout << "-----------------------" << endl;
+    cout << "-----------------------" << endl;
+    cout << "Further statistics:" << endl;
+}

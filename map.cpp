@@ -16,6 +16,7 @@
 #include "lava.h"
 #include "woods.h"
 #include "road.h"
+#include "treasure.h"
 
 
 /**
@@ -25,6 +26,7 @@ CMap::CMap ( CView * myview )
         :   width ( 0 ),
             height ( 0 ),
             moves ( 0 ),
+            max_moves ( 1000000 ),
             view ( view )
 {
 }
@@ -47,7 +49,7 @@ CMap::~CMap()
  */
 bool CMap::load (){
     string srcFile;
-
+    clean ();
     cout << "Enter file name, you want to load" << endl;
     if ( ! ( cin >> srcFile ) )
         view -> print ( "wrong file name\n" );
@@ -85,6 +87,8 @@ bool CMap::addTerrain ( const char & terrain, size_t lineNumber ) {
         case 'R' : tmp = new CRoad ();
             break;
         case 'W' : tmp = new CWoods ();
+            break;
+        case 'T' : tmp = new CTreasure ();
             break;
         default  :
             return false;
@@ -149,6 +153,8 @@ bool CMap::readHeader ( ifstream & ifs ){
         return false;
     if ( ( ! readLine ( ifs, readStr, moves ) ) || readStr != "moves:" )
         return false;
+    if ( ( ! readLine ( ifs, readStr, max_moves ) ) || readStr != "mxmvs:" )
+        return false;
     return true;
 }
 
@@ -158,10 +164,8 @@ bool CMap::readHeader ( ifstream & ifs ){
  * @return
  */
 bool CMap::readContent ( ifstream & ifs ){
-    view -> print ( "reading content\n" );
     int linesRead = 0;
     string line;
-    int counter = 0;
     for ( size_t i = 0 ; i < height ; i++ ){
         getline ( ifs, line );
         line . push_back( ' ' );
@@ -175,18 +179,16 @@ bool CMap::readContent ( ifstream & ifs ){
             vector <CCharacter*> new_character_vector;
             terrain_map . push_back( new_terrain_vector );
             characters_map . push_back( new_character_vector );
-            counter ++;
             if ( ! addTerrain ( line[ j ], i  ) ){
                 view -> print ( "Wrong terrain index\n" );
                 return false;
             }
             if ( ! addCharacter ( line [ j + 1 ], i ) ){
-                cout << "Wrong character index\n" << endl;
+                view -> print ( "Wrong character index\n" );
                 return false;
             }
         }
     }
-    cout << "counter " << counter << endl;
     return true;
 }
 /**
@@ -195,7 +197,6 @@ bool CMap::readContent ( ifstream & ifs ){
  * @return
  */
 bool CMap::readCharacterInfo ( ifstream & ifs ) {
-    view -> print ( "readingCharacterInfo\n" );
     string line;
     size_t value;
     size_t coordX;
@@ -264,6 +265,9 @@ string CMap::printHeader (){
     out . append ( "\n" );
     out . append ( "moves:" );
     out . append ( to_string( moves ) );
+    out . append ( "\n" );
+    out . append ( "mxmvs:" );
+    out . append ( to_string( max_moves ) );
     out . append ( "\n" );
     return out;
 }
@@ -378,7 +382,7 @@ void CMap::decreaseMoves (){
  */
 string CMap::showCounter() {
     string out = "moves: ";
-    out . append ( to_string( moves ) ) . append ("\n");
+    out . append ( to_string( moves ) ) . append ( " / " ) . append ( to_string( max_moves ) ) . append ("\n");
     return out;
 }
 /**
@@ -403,8 +407,17 @@ CCharacter * CMap::getPlayer () const{
     return characters[0];
 }
 
-bool CMap::loseTheGame() {
-    return ! characters[0] -> stillAlive();
+bool CMap::loseTheGame() const {
+    if ( ! characters[0] -> stillAlive() || moves >= max_moves )
+        return true;
+    return false;
+}
+
+bool CMap::winTheGame() const {
+    pair <size_t, size_t> positon = characters[0] -> getPosition();
+    if ( terrain_map[positon . first][positon . second] -> print() == 'T' )
+        return true;
+    return false;
 }
 
 /**

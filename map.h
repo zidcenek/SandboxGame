@@ -18,6 +18,7 @@ protected:
     size_t width;
     size_t height;
     size_t moves;
+    size_t max_moves;
     vector <vector<CTerrain*> > terrain_map;
     vector <vector<CCharacter*> > characters_map;
     vector <CCharacter*> characters;
@@ -41,7 +42,8 @@ public:
     void decreaseMoves ();
     string showCounter();
     void clean ();
-    bool loseTheGame ();
+    bool loseTheGame () const;
+    bool winTheGame () const;
     CCharacter * getPlayer () const;
     void terrainInteraction () const;
 };
