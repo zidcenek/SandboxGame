@@ -9,9 +9,7 @@ using namespace std;
  * constructor
  */
 CControlPanel::CControlPanel ( ostream & os )
-        :   width ( 0 ),
-            height ( 0 ),
-            view ( new CView ( cout ) ),
+        :   view ( new CView ( cout ) ),
             map ( view )
 {
 }
@@ -33,7 +31,6 @@ void CControlPanel::initialize (){
     while ( true ){
         view -> showMenu();
         cin >> pressedKey;
-
         switch ( pressedKey ){
             case 'q' :
             break;
@@ -48,44 +45,44 @@ void CControlPanel::initialize (){
             break;
 
         while ( play ){
-            cin . clear ();
-            view -> print ( map . printMap() );
-            view -> print ( map . showCounter() );
-            view -> print ( map . getPlayer() -> showStats () );
-            view -> showPossibilities();
-            cin >> pressedKey;
-            switch ( pressedKey ){
-                case 'w' : map . move ( -1, 0 );
-                break;
-                case 's' : map . move ( 1, 0 );
-                break;
-                case 'a' : map . move ( 0, -1 );
-                break;
-                case 'd' : map . move ( 0, 1 );
-                break;
-                case 'u' : map . save ();
-                break;
-                case 'm' : play = false;
-                break;
-                default  : view -> invalidKey ();
-            }
-            map . terrainInteraction ();
-            if ( map . winTheGame() ){
-                view -> victory ();
-                view -> print ( map . printMap() );
-                view -> print ( map . showCounter() );
-                view -> print ( map . getPlayer() -> showStats () );
-                view -> print ( "-----------------------\n" );
-                play = false;
-            }
-            if ( map . loseTheGame () ) {
-                view -> lostTheGame ();
-                play = false;
-            }
+            playMove ( play );
         }
         map . clean();
     }
 }
-bool CControlPanel::readChar (){
-
+void CControlPanel::playMove ( bool & play ){
+    char pressedKey;
+    cin . clear ();
+    view -> print ( map . printMap() );
+    view -> print ( map . showCounter() );
+    view -> print ( map . getPlayer() -> showStats () );
+    view -> showPossibilities();
+    cin >> pressedKey;
+    switch ( pressedKey ){
+        case 'w' : map . move ( -1, 0 );
+            break;
+        case 's' : map . move ( 1, 0 );
+            break;
+        case 'a' : map . move ( 0, -1 );
+            break;
+        case 'd' : map . move ( 0, 1 );
+            break;
+        case 'u' : map . save ();
+            break;
+        case 'm' : play = false;
+            break;
+        default  : view -> invalidKey ();
+    }
+    if ( map . winTheGame() ){
+        view -> victory ();
+        view -> print ( map . printMap() );
+        view -> print ( map . showCounter() );
+        view -> print ( map . getPlayer() -> showStats () );
+        view -> print ( "-----------------------\n" );
+        play = false;
+    }
+    if ( map . loseTheGame () ) {
+        view -> lostTheGame ();
+        play = false;
+    }
 }

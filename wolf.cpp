@@ -14,8 +14,8 @@ CWolf::~CWolf()
 }
 /**
  * while interacting with another character, there is some chance on special attack
- * @return
  */
-void CWolf::specialAttack () const{
-
-}
+void CWolf::specialAttack ( CCharacter * enemy ) {
+    enemy -> recieveDmg( attack );
+    health = max_health;
+};

@@ -20,6 +20,7 @@ public:
     virtual ~CTerrain ();
     virtual char print () const = 0;
     virtual string interact ( CCharacter * character ) const;
+    virtual CTerrain * action ();
 };
 
 

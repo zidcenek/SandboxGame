@@ -72,8 +72,8 @@ string CCharacter::showStats() const {
 }
 
 void CCharacter::interaction ( CCharacter * character ) {
-    recieveDmg ( character -> getAttack() );
-    character -> recieveDmg ( getAttack() );
+    cast ( character );
+    character -> cast( this );
 }
 void CCharacter::recieveDmg ( int damage ){
     health -= damage;
@@ -98,4 +98,9 @@ void CCharacter::heal( int heal ) {
 
 char CCharacter::getSymbol() const {
     return symbol;
+}
+bool CCharacter::stillAlive (){
+    if ( health <= 0 )
+        return false;
+    return true;
 }

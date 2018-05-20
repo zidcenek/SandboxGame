@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <cstdlib>
 
 #include "character.h"
 #include "map.h"
@@ -17,6 +18,7 @@
 #include "woods.h"
 #include "road.h"
 #include "treasure.h"
+#include "stone.h"
 
 
 /**
@@ -89,6 +91,8 @@ bool CMap::addTerrain ( const char & terrain, size_t lineNumber ) {
         case 'W' : tmp = new CWoods ();
             break;
         case 'T' : tmp = new CTreasure ();
+            break;
+        case 'S' : tmp = new CStone ();
             break;
         default  :
             return false;
@@ -191,6 +195,7 @@ bool CMap::readContent ( ifstream & ifs ){
     }
     return true;
 }
+
 /**
  * reads special character info such as health, attack, etc. ( used while loading a saved game )
  * @param ifs
@@ -255,7 +260,7 @@ bool CMap::readLine ( ifstream & ifs, string & name, size_t & value ) {
  * prints a header of the map required for saving the game
  * @return - returns a string that can be further printed to file / console...
  */
-string CMap::printHeader (){
+string CMap::printHeader () const {
     string out;
     out . append ( "width:" );
     out . append ( to_string( width ) );
@@ -277,7 +282,7 @@ string CMap::printHeader (){
  * also checks wheter the mofification of the output file went well
  * @param ofs - file where the game will be saved
  */
-void CMap::save (){
+void CMap::save () const {
     cout << "How do you want to name your saved game?" << endl;
     string file;
     cin >> file;
@@ -310,7 +315,7 @@ void CMap::save (){
  * @param y - represents parameter compared with height
  * @return
  */
-bool CMap::correctPosition( size_t x, size_t y ) {
+bool CMap::correctPosition( size_t x, size_t y ) const {
     if ( x >= height || y >= width )
         return false;
     return true;
@@ -327,7 +332,9 @@ void CMap::move ( size_t x, size_t y ){
         view -> cannotMoveThere ();
         return;
     }
-    CCharacter * player = characters[0];
+    increasesMoves();
+    terrainInteraction ();
+    terrainEvent();
     CCharacter * enemy = characters_map[position . first + x][position . second + y];
     if ( characters_map[position . first + x][position . second + y] != nullptr )
     {
@@ -347,14 +354,13 @@ void CMap::move ( size_t x, size_t y ){
     characters_map[position . first + x][position . second + y] = characters[0];
     characters_map[position . first][position . second] = enemy;
     characters[0] -> setPosition( position . first + x, position . second + y );
-    increasesMoves();
 }
 
 /**
  * prints the map into a string
  * @return
  */
-string CMap::printMap () {
+string CMap::printMap () const {
     stringstream strs;
     for ( size_t i = 0; i < width; i++ ) {
         for ( size_t j = 0; j < height; j++ ) {
@@ -376,15 +382,17 @@ void CMap::increasesMoves (){
 void CMap::decreaseMoves (){
     moves --;
 }
+
 /**
  * returns a string saying how many moves have been done
  * @return
  */
-string CMap::showCounter() {
+string CMap::showCounter() const {
     string out = "Moves: ";
     out . append ( to_string( moves ) ) . append ( " / " ) . append ( to_string( max_moves ) ) . append ("\n");
     return out;
 }
+
 /**
  * cleans after itself - clears vectors
  * used so a different game was able to be loaded
@@ -403,9 +411,16 @@ void CMap::clean() {
     characters . clear ();
 }
 
+/**
+ * @return - returns pointer to player
+ */
 CCharacter * CMap::getPlayer () const{
     return characters[0];
 }
+/**
+ * circumstances under which the game is lost
+ * @return - true if lost
+ */
 
 bool CMap::loseTheGame() const {
     if ( ! characters[0] -> stillAlive() || moves >= max_moves )
@@ -413,6 +428,10 @@ bool CMap::loseTheGame() const {
     return false;
 }
 
+/**
+ * circumstances under which the game is won
+ * @return - true if won
+ */
 bool CMap::winTheGame() const {
     pair <size_t, size_t> positon = characters[0] -> getPosition();
     if ( terrain_map[positon . first][positon . second] -> print() == 'T' )
@@ -431,4 +450,62 @@ void CMap::terrainInteraction () const {
         positon = (*i) -> getPosition();
         terrain_map[positon . first][positon . second] -> interact( *i );
     }*/
+}
+
+/**
+ * does every terrain event, that is specified
+ */
+void CMap::terrainEvent() {
+    lavaSpreading();
+    terrainChange();
+}
+
+/**
+ * check wheter there is lava in adjacent positions
+ * @param x - horizontal position
+ * @param y - vertical position
+ * @return  - true if adjacent position is lava
+ */
+bool CMap::isAdjacentLava ( size_t x, size_t y ) const{
+    if ( correctPosition( x - 1 , y ) )
+        if ( terrain_map[x - 1][y] -> print() == LAVA_SYMBOL )
+            return true;
+    if ( correctPosition( x + 1 , y ) )
+        if ( terrain_map[x + 1][y] -> print() == LAVA_SYMBOL )
+            return true;
+    if ( correctPosition( x , y - 1 ) )
+        if ( terrain_map[x][y - 1] -> print() == LAVA_SYMBOL )
+            return true;
+    if ( correctPosition( x, y + 1 ) )
+        if ( terrain_map[x][y + 1] -> print() == LAVA_SYMBOL )
+            return true;
+
+}
+/**
+ * lava has 20% chance to spread to adjacent positions
+ */
+void CMap::lavaSpreading (){
+    for ( size_t i = 0 ; i < terrain_map . size () ; i ++ ){
+        for ( size_t j = 0 ; j < terrain_map[i] . size () ; j++ ){
+            if ( isAdjacentLava ( i, j ) && rand() % 10 < 2 && terrain_map[i][j] -> print() != TREASURE_SYMBOL ){
+                CLava * tmp = new CLava ();
+                delete terrain_map[i][j];
+                terrain_map[i][j] = tmp;
+            }
+        }
+    }
+}
+/**
+ * if the action in terrain (children) is defined it changes under defined circumstaces
+ */
+void CMap::terrainChange (){
+    for ( size_t i = 0 ; i < terrain_map . size () ; i ++ ){
+        for ( size_t j = 0 ; j < terrain_map[i] . size () ; j++ ){
+            CTerrain * tmp = terrain_map[i][j] -> action();
+            if ( tmp != nullptr ){
+                delete terrain_map[i][j];
+                terrain_map[i][j] = tmp;
+            }
+        }
+    }
 }

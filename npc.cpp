@@ -12,8 +12,9 @@ CNpc::CNpc ( pair<size_t, size_t> pos, int hea, int att, const char & sym )
 CNpc::~CNpc()
 {
 }
+/*
 bool CNpc::stillAlive (){
     if ( health <= 0 )
         return false;
     return true;
-}
+}*/

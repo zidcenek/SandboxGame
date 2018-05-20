@@ -15,6 +15,6 @@ CBear::~CBear()
  * while interacting with another character, there is some chance on special attack
  * @return
  */
-void CBear::specialAttack () const{
-
+void CBear::specialAttack ( CCharacter * enemy ) {
+    enemy -> recieveDmg( attack );
 }

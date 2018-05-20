@@ -21,7 +21,7 @@ protected:
 public:
     CBear ( pair<size_t, size_t> pos );
     ~CBear();
-    virtual void specialAttack () const;
+    virtual void specialAttack ( CCharacter * enemy );
 };
 
 

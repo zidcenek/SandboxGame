@@ -16,6 +16,7 @@ protected:
 public:
     CPlayer ( pair<size_t, size_t> pos, int hea, int att );
     virtual bool stillAlive ();
+    virtual void cast ( CCharacter * character );
     void interactWithTerrain ();
 };
 

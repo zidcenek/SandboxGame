@@ -16,16 +16,14 @@ using namespace std;
  */
 class CControlPanel {
 protected:
-    size_t width;
-    size_t height;
     CMap map;
     vector <CCharacter*> characters;
     CView * view;
 public:
     CControlPanel ( ostream & os );
     ~CControlPanel();
-    bool readChar ();
     void initialize ();
+    void playMove ( bool & play );
 };
 
 #endif //SANDBOXGAME_CONTROLPANEL_H

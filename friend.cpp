@@ -7,12 +7,13 @@
 using namespace std;
 
 CFriend::CFriend ( pair<size_t, size_t> pos )
-        : CNpc::CNpc ( pos, FRIEND_HEALTH, FRIEND_ATTACK, FRIEND_SYMBOL )
+        : CCharacter::CCharacter ( pos, FRIEND_HEALTH, FRIEND_ATTACK, FRIEND_SYMBOL )
 {
 }
 CFriend::~CFriend()
 {
 }
-void CFriend::interaction ( CCharacter * character ){
+void CFriend::cast ( CCharacter * character ){
     character -> heal ( 10 );
+    health = max_health;
 }

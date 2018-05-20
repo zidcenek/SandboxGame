@@ -14,3 +14,6 @@ bool CPlayer::stillAlive (){
         return false;
     return true;
 }
+void CPlayer::cast ( CCharacter * character ) {
+    character -> recieveDmg ( getAttack() );
+}

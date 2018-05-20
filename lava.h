@@ -14,11 +14,14 @@ const char LAVA_SYMBOL = 'L';
  */
 class CLava : public CTerrain {
 protected:
+    int durability;
+    int movesCounter;
 public:
     CLava ();
     ~CLava ();
     virtual char print () const;
     virtual string interact ( CCharacter * character ) const;
+    virtual CTerrain * action ();
 };
 
 #endif //SANDBOXGAME_LAVA_H

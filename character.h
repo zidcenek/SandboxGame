@@ -35,8 +35,9 @@ public:
     pair <size_t, size_t> getPosition () const;
     void setPosition ( size_t x, size_t y );
     virtual string showStats () const;
-    virtual void interaction ( CCharacter * character );
-    virtual bool stillAlive () = 0;
+    virtual void cast ( CCharacter * character ) = 0;
+    void interaction ( CCharacter * character );
+    virtual bool stillAlive ();
     void recieveDmg ( int damage );
     void heal ( int heal );
 };

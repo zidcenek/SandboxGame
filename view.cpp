@@ -110,7 +110,9 @@ void CView::introduction() {
     cout << "Characters:" << endl;
     cout << "   P - player" << endl;
     cout << "   B - bear (50 Health, 15 attack)" << endl;
+    cout << "     - 10% chance to special attack (deal double damage) " << endl;
     cout << "   W - wolf (25 Health, 5 attack)" << endl;
+    cout << "     - 10% chance to special attack (heal self to max health) " << endl;
     cout << "   F - friend - heals you when you interact with him" << endl;
     cout << "Terrain:" << endl;
     cout << "   R - road - 20% chance to be healed on the road" << endl;

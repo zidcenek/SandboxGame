@@ -19,7 +19,7 @@ protected:
 public:
     CWolf ( pair<size_t, size_t> pos );
     ~CWolf();
-    virtual void specialAttack () const;
+    virtual void specialAttack ( CCharacter * enemy );
 };
 
 
