@@ -381,7 +381,7 @@ void CMap::decreaseMoves (){
  * @return
  */
 string CMap::showCounter() {
-    string out = "moves: ";
+    string out = "Moves: ";
     out . append ( to_string( moves ) ) . append ( " / " ) . append ( to_string( max_moves ) ) . append ("\n");
     return out;
 }

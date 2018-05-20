@@ -27,6 +27,7 @@ public:
     void showMenu ();
     void lostTheGame ();
     void victory ();
+    void introduction ();
     void print ( const char * str );
     void print ( string str );
     void print ( char str );

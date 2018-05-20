@@ -70,6 +70,7 @@ bool CView::print ( ofstream & ofs, string str ){
  */
 void CView::showMenu() {
     cout << "[l] load game" << endl
+         << "[i] introduction and controls" << endl
          << "[q] quit" << endl;
 }
 /**
@@ -102,4 +103,21 @@ void CView::victory() {
     cout << "-----------------------" << endl;
     cout << "-----------------------" << endl;
     cout << "Further statistics:" << endl;
+}
+
+void CView::introduction() {
+    cout << "Movement - w s a d" << endl;
+    cout << "Characters:" << endl;
+    cout << "   P - player" << endl;
+    cout << "   B - bear (50 Health, 15 attack)" << endl;
+    cout << "   W - wolf (25 Health, 5 attack)" << endl;
+    cout << "   F - friend - heals you when you interact with him" << endl;
+    cout << "Terrain:" << endl;
+    cout << "   R - road - 20% chance to be healed on the road" << endl;
+    cout << "   W - woods - 10% chance a branch falls on your head" << endl;
+    cout << "   L - lava - deals 10 damage every turn you stand here" << endl;
+    cout << "     - lava has a chance to spread to adjacent terrains" << endl;
+    cout << "     - after 5 turns lava turns into stone" << endl;
+    cout << "   S - stone - nothing special" << endl;
+    cout << "   T - treasure - finds this and win the game" << endl;
 }

@@ -18,6 +18,7 @@ protected:
 public:
     CFriend ( pair<size_t, size_t> pos );
     ~CFriend();
+    virtual void interaction ( CCharacter * character );
     void talk () const;
 };
 

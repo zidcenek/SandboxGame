@@ -29,7 +29,6 @@ CControlPanel::~CControlPanel()
 void CControlPanel::initialize (){
     char pressedKey;
     bool play = false;
-    //map . save ();
     cin . clear ();
     while ( true ){
         view -> showMenu();
@@ -41,7 +40,7 @@ void CControlPanel::initialize (){
             case 'l' : while ( ! map . load () ){}
                        play = true;
             break;
-            case 'i' : // introduction
+            case 'i' : view -> introduction();
             break;
             default : view -> invalidKey();
         }

@@ -13,3 +13,6 @@ CFriend::CFriend ( pair<size_t, size_t> pos )
 CFriend::~CFriend()
 {
 }
+void CFriend::interaction ( CCharacter * character ){
+    character -> heal ( 10 );
+}

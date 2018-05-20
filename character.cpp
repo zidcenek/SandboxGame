@@ -71,9 +71,9 @@ string CCharacter::showStats() const {
     return out;
 }
 
-void CCharacter::interaction ( CCharacter * attacker ) {
-    recieveDmg ( attacker -> getAttack() );
-    attacker -> recieveDmg ( getAttack() );
+void CCharacter::interaction ( CCharacter * character ) {
+    recieveDmg ( character -> getAttack() );
+    character -> recieveDmg ( getAttack() );
 }
 void CCharacter::recieveDmg ( int damage ){
     health -= damage;
