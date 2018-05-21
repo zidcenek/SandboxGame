@@ -24,7 +24,7 @@ protected:
     vector <CCharacter*> characters;
     CView * view;
 public:
-    CMap ( CView * myview );
+    CMap ( CView & myview );
     ~CMap();
     bool readHeader ( ifstream & ifs );
     bool readContent ( ifstream & ifs );
@@ -39,7 +39,7 @@ public:
     bool addTerrain ( const char & terrain, size_t lineNumber );
     bool addCharacter ( const char & character, size_t lineNumber );
     bool correctPosition ( size_t x, size_t y ) const;
-    void move ( size_t x, size_t y );
+    void move ( int x, int y );
     void increasesMoves ();
     void decreaseMoves ();
     bool loseTheGame () const;

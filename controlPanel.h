@@ -20,7 +20,7 @@ protected:
     vector <CCharacter*> characters;
     CView * view;
 public:
-    CControlPanel ( ostream & os );
+    CControlPanel ( CView * v );
     ~CControlPanel();
     void initialize ();
     void playMove ( bool & play );

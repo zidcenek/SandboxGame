@@ -7,7 +7,7 @@
 
 #include "terrain.h"
 
-const char STONE_SYMBOL = 'S';
+const char STONE_SYMBOL = 's';
 
 /**
  * neutral terrain

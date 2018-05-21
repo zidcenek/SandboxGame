@@ -7,33 +7,41 @@
 using namespace std;
 
 CView::CView ( ostream & ostr )
-    : os ( cout )
+    : os ( ostr )
 {
 }
 CView::~CView()
 {
 }
+/**
+ * clears the console
+ */
+void CView::clear() {
+    for ( int i = 0 ; i < 20 ; i ++)
+        os << endl;
+}
 void CView::invalidKey () {
-    cout << "You pressed an invalid key, please try again" << endl;
+    os << "You pressed an invalid key, please try again" << endl;
 }
 /**
  * will change to a template method
  * @param str
  */
 void CView::print ( const char * str ) {
-    cout << str;
+    os << str;
 }
 void CView::print ( const char str ){
-    cout << str;
+    os << str;
 }
 void CView::print ( string str ) {
-    cout << str;
+    os << str;
 }
+
 /**
  * prints unable to save mistake
  */
 void CView::unableToSave() {
-    cout << "Mistake while saving the game. Try a different filename." << endl;
+    os << "Mistake while saving the game. Try a different filename." << endl;
 }
 /**
  * prints to a specific file ( will change to a template method )
@@ -69,7 +77,7 @@ bool CView::print ( ofstream & ofs, string str ){
  * shows the main menu
  */
 void CView::showMenu() {
-    cout << "[l] load game" << endl
+    os << "[l] load game" << endl
          << "[i] introduction and controls" << endl
          << "[q] quit" << endl;
 }
@@ -77,7 +85,7 @@ void CView::showMenu() {
  * show possibilities while playing the game
  */
 void CView::showPossibilities (){
-    cout << "[m] main menu" << endl
+    os << "[m] main menu" << endl
          << "[u] save game" << endl
          << "[w] move up" << endl
          << "[s] move down" << endl
@@ -88,38 +96,47 @@ void CView::showPossibilities (){
  * shows an error when player tries to move somewhere forbidden
  */
 void CView::cannotMoveThere (){
-    cout << "You cannot move there." << endl;
+    os << "You cannot move there." << endl;
 }
 
+/**
+ * comment when the game is lost
+ */
 void CView::lostTheGame () {
-    cout << "-----------------------" << endl;
-    cout << "You have lost the game." << endl;
-    cout << "-----------------------" << endl;
+    os << "-----------------------" << endl;
+    os << "You have lost the game." << endl;
+    os << "-----------------------" << endl;
 }
 
+/**
+ * comment when the game is won
+ */
 void CView::victory() {
-    cout << "-----------------------" << endl;
-    cout << "Congratulations! You have found the treasure and won the game!" << endl;
-    cout << "-----------------------" << endl;
-    cout << "-----------------------" << endl;
-    cout << "Further statistics:" << endl;
+    os << "-----------------------" << endl;
+    os << "Congratulations! You have found the treasure and won the game!" << endl;
+    os << "-----------------------" << endl;
+    os << "-----------------------" << endl;
+    os << "Further statistics:" << endl;
 }
 
+/**
+ * introduction to controls and game itself
+ */
 void CView::introduction() {
-    cout << "Movement - w s a d" << endl;
-    cout << "Characters:" << endl;
-    cout << "   P - player" << endl;
-    cout << "   B - bear (50 Health, 15 attack)" << endl;
-    cout << "     - 10% chance to special attack (deal double damage) " << endl;
-    cout << "   W - wolf (25 Health, 5 attack)" << endl;
-    cout << "     - 10% chance to special attack (heal self to max health) " << endl;
-    cout << "   F - friend - heals you when you interact with him" << endl;
-    cout << "Terrain:" << endl;
-    cout << "   R - road - 20% chance to be healed on the road" << endl;
-    cout << "   W - woods - 10% chance a branch falls on your head" << endl;
-    cout << "   L - lava - deals 10 damage every turn you stand here" << endl;
-    cout << "     - lava has a chance to spread to adjacent terrains" << endl;
-    cout << "     - after 5 turns lava turns into stone" << endl;
-    cout << "   S - stone - nothing special" << endl;
-    cout << "   T - treasure - finds this and win the game" << endl;
+    os << "Movement - w s a d" << endl;
+    os << "Characters (all Characters are represented with upper case chars):" << endl;
+    os << "   P - player" << endl;
+    os << "   B - bear (50 Health, 15 attack)" << endl;
+    os << "     - 10% chance to special attack (deal double damage) " << endl;
+    os << "   W - wolf (25 Health, 5 attack)" << endl;
+    os << "     - 10% chance to special attack (heal self to max health) " << endl;
+    os << "   F - friend - heals you when you interact with him" << endl;
+    os << "Terrain (all types of terrain are represented with lower case chars):" << endl;
+    os << "   r - road - 20% chance to be healed on the road" << endl;
+    os << "   w - woods - 10% chance a branch falls on your head" << endl;
+    os << "   l - lava - deals 10 damage every turn you stand here" << endl;
+    os << "     - lava has a chance to spread to adjacent terrains" << endl;
+    os << "     - after 5 turns lava turns into stone" << endl;
+    os << "   s - stone - nothing special" << endl;
+    os << "   t - treasure - finds this and win the game" << endl;
 }

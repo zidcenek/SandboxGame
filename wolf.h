@@ -9,7 +9,7 @@
 
 const int WOLF_HEALTH = 25;
 const int WOLF_ATTACK = 8;
-const char WOLF_SYMBOL = 'w';
+const char WOLF_SYMBOL = 'W';
 
 /**
  * class representing specific monster - bear ( symbol B )

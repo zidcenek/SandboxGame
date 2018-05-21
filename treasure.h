@@ -7,7 +7,7 @@
 
 #include "terrain.h"
 
-const char TREASURE_SYMBOL = 'T';
+const char TREASURE_SYMBOL = 't';
 
 /**
  * if you stand here you win the game

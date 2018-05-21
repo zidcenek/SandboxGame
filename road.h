@@ -7,7 +7,7 @@
 
 #include "terrain.h"
 
-const char ROAD_SYMBOL = 'R';
+const char ROAD_SYMBOL = 'r';
 
 /**
  * class representing terrain - road ( symbol R )

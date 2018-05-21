@@ -7,7 +7,7 @@
 
 #include "terrain.h"
 
-const char LAVA_SYMBOL = 'L';
+const char LAVA_SYMBOL = 'l';
 
 /**
  * Class representing lava ( specific symbol L )

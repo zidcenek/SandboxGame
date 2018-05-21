@@ -4,11 +4,11 @@ CXXFLAGS=-std=c++11
 
 all: sandboxGame
 
-sandboxGame: main.o bear.o friend.o lava.o road.o view.o woods.o character.o monster.o player.o terrain.o wolf.o controlPanel.o map.o treasure.o
+sandboxGame: main.o bear.o friend.o lava.o road.o view.o woods.o character.o monster.o player.o terrain.o wolf.o controlPanel.o map.o treasure.o stone.o
 	$(LD) -o $@ $^
 
 clean:
-	rm -f bear.o friend.o lava.o npc.o road.o view.o woods.o character.o monster.o player.o terrain.o wolf.o controlPanel.o map.o main.o sandboxGame
+	rm -f bear.o friend.o lava.o npc.o road.o view.o woods.o character.o monster.o player.o terrain.o wolf.o controlPanel.o map.o main.o sandboxGame stone.o
 
 %o: %cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
@@ -28,6 +28,7 @@ treasure.o: treasure.cpp treasure.h terrain.h character.h
 view.o: view.cpp view.h
 wolf.o: wolf.cpp wolf.h monster.h character.h
 woods.o: woods.cpp woods.h terrain.h character.h
+stone.o: stone.cpp stone.h terrain.h character.h
 
 
 

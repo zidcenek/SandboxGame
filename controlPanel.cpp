@@ -8,9 +8,9 @@ using namespace std;
 /**
  * constructor
  */
-CControlPanel::CControlPanel ( ostream & os )
-        :   view ( new CView ( cout ) ),
-            map ( view )
+CControlPanel::CControlPanel ( CView * v )
+        :   view ( v ),
+            map ( *v )
 {
 }
 /**
@@ -18,7 +18,6 @@ CControlPanel::CControlPanel ( ostream & os )
  */
 CControlPanel::~CControlPanel()
 {
-    delete view;
 }
 /**
  * initializes player's gaming experience ( shows main menu, etc )
@@ -31,24 +30,27 @@ void CControlPanel::initialize (){
     while ( true ){
         view -> showMenu();
         cin >> pressedKey;
+        view -> clear();
         switch ( pressedKey ){
             case 'q' :
-            break;
+                break;
             case 'l' : while ( ! map . load () ){}
-                       play = true;
-            break;
-            case 'i' : view -> introduction();
-            break;
-            default : view -> invalidKey();
+                play = true;
+                break;
+            case 'i' :
+                view -> introduction ();
+                break;
+            default : view -> invalidKey ();
         }
-        if ( pressedKey == 'q' )
+        if ( pressedKey == 'q' ) {
             break;
-
+        }
         while ( play ){
             playMove ( play );
         }
         map . clean();
     }
+    cin . clear ();
 }
 void CControlPanel::playMove ( bool & play ){
     char pressedKey;
@@ -58,6 +60,7 @@ void CControlPanel::playMove ( bool & play ){
     view -> print ( map . getPlayer() -> showStats () );
     view -> showPossibilities();
     cin >> pressedKey;
+    view -> clear ();
     switch ( pressedKey ){
         case 'w' : map . move ( -1, 0 );
             break;
@@ -73,6 +76,7 @@ void CControlPanel::playMove ( bool & play ){
             break;
         default  : view -> invalidKey ();
     }
+    /* In case of victory */
     if ( map . winTheGame() ){
         view -> victory ();
         view -> print ( map . printMap() );
@@ -81,6 +85,7 @@ void CControlPanel::playMove ( bool & play ){
         view -> print ( "-----------------------\n" );
         play = false;
     }
+    /* In case of defeat */
     if ( map . loseTheGame () ) {
         view -> lostTheGame ();
         play = false;

@@ -21,21 +21,15 @@
 #include "stone.h"
 
 
-/**
- * constructor
- */
-CMap::CMap ( CView * myview )
+CMap::CMap ( CView & myview )
         :   width ( 0 ),
             height ( 0 ),
             moves ( 0 ),
             max_moves ( 1000000 ),
-            view ( view )
+            view ( &myview )
 {
 }
 
-/**
- * destructor
- */
 CMap::~CMap()
 {
     for ( auto i = terrain_map . begin () ; i != terrain_map . end () ; ++ i )
@@ -326,14 +320,14 @@ bool CMap::correctPosition( size_t x, size_t y ) const {
  * @param x - where to move horizontally
  * @param y - where to move vertically
  */
-void CMap::move ( size_t x, size_t y ){
-    pair <size_t, size_t> position = characters[0] -> getPosition();
+void CMap::move ( int x, int y ){
+    pair <size_t, size_t> position = getPlayer() -> getPosition();
     if ( ! correctPosition( position . first + x, position . second + y ) ) {
         view -> cannotMoveThere ();
         return;
     }
     increasesMoves();
-    terrainInteraction ();
+
     terrainEvent();
     CCharacter * enemy = characters_map[position . first + x][position . second + y];
     if ( characters_map[position . first + x][position . second + y] != nullptr )
@@ -345,15 +339,18 @@ void CMap::move ( size_t x, size_t y ){
                     characters . erase( i );
                     delete enemy;
                     characters_map[position . first + x][position . second + y] = nullptr;
+                    terrainInteraction ();
                     return;
                 }
         }
+        terrainInteraction ();
         /* when player interacts with another character, he stays in the same position */
         return;
     }
-    characters_map[position . first + x][position . second + y] = characters[0];
+    characters_map[position . first + x][position . second + y] = getPlayer();
     characters_map[position . first][position . second] = enemy;
-    characters[0] -> setPosition( position . first + x, position . second + y );
+    getPlayer() -> setPosition( position . first + x, position . second + y );
+    terrainInteraction ();
 }
 
 /**
@@ -434,7 +431,7 @@ bool CMap::loseTheGame() const {
  */
 bool CMap::winTheGame() const {
     pair <size_t, size_t> positon = characters[0] -> getPosition();
-    if ( terrain_map[positon . first][positon . second] -> print() == 'T' )
+    if ( terrain_map[positon . first][positon . second] -> print() == TREASURE_SYMBOL )
         return true;
     return false;
 }
@@ -443,13 +440,8 @@ bool CMap::winTheGame() const {
  * makes every character interact with terrain which they stand on
  */
 void CMap::terrainInteraction () const {
-    pair <size_t, size_t> positon = characters[0] -> getPosition();
-    view -> print( terrain_map[positon . first][positon . second] -> interact( characters[0] ) );
-    /* Wheter non-player characters should interact with terrain as well. */
-    /*for ( auto i =  ( ++ characters . begin () ) ; i != characters . end () ; ++ i ) {
-        positon = (*i) -> getPosition();
-        terrain_map[positon . first][positon . second] -> interact( *i );
-    }*/
+    pair <size_t, size_t> positon = getPlayer() -> getPosition();
+    view -> print( terrain_map[positon . first][positon . second] -> interact( getPlayer() ) );
 }
 
 /**

@@ -7,7 +7,7 @@
 
 #include "terrain.h"
 
-const char WOODS_SYMBOL = 'W';
+const char WOODS_SYMBOL = 'w';
 
 /**
  * Class representing forest ( specific symbol W )
