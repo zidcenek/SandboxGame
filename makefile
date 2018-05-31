@@ -1,6 +1,6 @@
 CXX=g++
 LD=g++
-CXXFLAGS=-std=c++11
+CXXFLAGS=-std=c++11 -Wall -pedantic
 
 all: sandboxGame
 

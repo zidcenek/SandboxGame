@@ -18,4 +18,4 @@ CWolf::~CWolf()
 void CWolf::specialAttack ( CCharacter * enemy ) {
     enemy -> recieveDmg( attack );
     health = max_health;
-};
+}

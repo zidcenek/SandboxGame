@@ -59,7 +59,7 @@ void CCharacter::setPosition(size_t x, size_t y) {
 }
 pair <size_t, size_t> CCharacter::getPosition () const{
     return position;
-};
+}
 string CCharacter::showStats() const {
     string out;
     out . append ( "Health: ");

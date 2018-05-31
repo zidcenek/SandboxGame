@@ -17,6 +17,7 @@ CTerrain::~CTerrain ()
  */
 string CTerrain::interact( CCharacter * character ) const
 {
+    return "";
 }
 /**
  * represents action that happens every moce with the terrain

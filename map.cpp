@@ -140,7 +140,6 @@ bool CMap::addCharacter ( const char & character, size_t lineNumber ) {
  */
 bool CMap::readHeader ( ifstream & ifs ){
     string readStr;
-    size_t sz;
     if ( ! ifs . is_open() ) {
         return false;
     }
@@ -162,7 +161,6 @@ bool CMap::readHeader ( ifstream & ifs ){
  * @return
  */
 bool CMap::readContent ( ifstream & ifs ){
-    int linesRead = 0;
     string line;
     for ( size_t i = 0 ; i < height ; i++ ){
         getline ( ifs, line );
@@ -200,7 +198,6 @@ bool CMap::readCharacterInfo ( ifstream & ifs ) {
     size_t value;
     size_t coordX;
     size_t coordY;
-    int counter = 0;
     while ( getline ( ifs, line ) . good () ){
         if ( ifs . eof () )
             break;
@@ -458,7 +455,7 @@ void CMap::terrainEvent() {
  * @param y - vertical position
  * @return  - true if adjacent position is lava
  */
-bool CMap::isAdjacentLava ( size_t x, size_t y ) const{
+bool CMap::isAdjacentLava ( size_t x, size_t y ) const {
     if ( correctPosition( x - 1 , y ) )
         if ( terrain_map[x - 1][y] -> print() == LAVA_SYMBOL )
             return true;
@@ -471,7 +468,7 @@ bool CMap::isAdjacentLava ( size_t x, size_t y ) const{
     if ( correctPosition( x, y + 1 ) )
         if ( terrain_map[x][y + 1] -> print() == LAVA_SYMBOL )
             return true;
-
+    return false;
 }
 /**
  * lava has 20% chance to spread to adjacent positions

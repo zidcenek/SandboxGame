@@ -16,9 +16,8 @@ using namespace std;
  */
 class CControlPanel {
 protected:
-    CMap map;
-    vector <CCharacter*> characters;
     CView * view;
+    CMap map;
 public:
     CControlPanel ( CView * v );
     ~CControlPanel();

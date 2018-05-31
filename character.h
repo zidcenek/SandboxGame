@@ -15,11 +15,11 @@ using namespace std;
  */
 class CCharacter {
 protected:
-    char symbol;
     pair <size_t, size_t> position;
     int max_health;
     int health;
     int attack;
+    char symbol;
 public:
     int getMax_health() const;
     int getHealth() const;
