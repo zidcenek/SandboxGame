@@ -21,8 +21,6 @@ protected:
     int attack;
     char symbol;
 public:
-    int getMax_health() const;
-    int getHealth() const;
     int getAttack() const;
     char getSymbol() const;
     void setHealth ( int hea );

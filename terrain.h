@@ -8,6 +8,7 @@
 #include <iostream>
 #include <cstdlib>
 #include "character.h"
+
 /**
  * parent to all terrains
  * #name -> represents symbol used by specific types of terrain
@@ -19,7 +20,7 @@ public:
     CTerrain ();
     virtual ~CTerrain ();
     virtual char print () const = 0;
-    virtual string interact ( CCharacter * character ) const;
+    virtual string interact ( CCharacter * character ) const = 0;
     virtual CTerrain * action ();
 };
 

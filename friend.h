@@ -11,7 +11,7 @@ const int FRIEND_HEALTH = 100;
 const int FRIEND_ATTACK = 5;
 const char FRIEND_SYMBOL = 'F';
 /**
- * class representing friendly NPC characters ( merchant, guard ... ) ( symbol F )
+ * class representing friendly NPC characters ( healer ) ( symbol F )
  */
 class CFriend : public CCharacter {
 protected:

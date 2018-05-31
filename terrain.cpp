@@ -12,13 +12,7 @@ CTerrain::CTerrain ()
 CTerrain::~CTerrain ()
 {
 }
-/**
- * iteract will not do anything unless explicitly defined
- */
-string CTerrain::interact( CCharacter * character ) const
-{
-    return "";
-}
+
 /**
  * represents action that happens every moce with the terrain
  * does nothing unless explicitly defined

@@ -10,7 +10,7 @@
 const char ROAD_SYMBOL = 'r';
 
 /**
- * class representing terrain - road ( symbol R )
+ * class representing terrain - road ( symbol r )
  */
 class CRoad : public CTerrain {
 protected:

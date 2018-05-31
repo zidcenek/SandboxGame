@@ -10,7 +10,7 @@
 const char STONE_SYMBOL = 's';
 
 /**
- * neutral terrain
+ * neutral terrain - (symbol s)
  */
 class CStone : public CTerrain {
 protected:

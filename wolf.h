@@ -12,7 +12,7 @@ const int WOLF_ATTACK = 8;
 const char WOLF_SYMBOL = 'W';
 
 /**
- * class representing specific monster - bear ( symbol B )
+ * class representing specific monster - wolf ( symbol W )
  */
 class CWolf : public CMonster {
 protected:

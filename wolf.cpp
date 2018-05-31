@@ -12,8 +12,10 @@ CWolf::CWolf ( pair<size_t, size_t> pos )
 CWolf::~CWolf()
 {
 }
+
 /**
  * while interacting with another character, there is some chance on special attack
+ * heals to max health
  */
 void CWolf::specialAttack ( CCharacter * enemy ) {
     enemy -> recieveDmg( attack );

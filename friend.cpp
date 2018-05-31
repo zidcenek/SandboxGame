@@ -13,6 +13,11 @@ CFriend::CFriend ( pair<size_t, size_t> pos )
 CFriend::~CFriend()
 {
 }
+
+/**
+ * method defining how is this character supposed to interact with another - heals
+ * @param character - another character
+ */
 void CFriend::cast ( CCharacter * character ){
     character -> heal ( 10 );
     health = max_health;

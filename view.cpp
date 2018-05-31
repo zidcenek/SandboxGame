@@ -13,6 +13,7 @@ CView::CView ( ostream & ostr )
 CView::~CView()
 {
 }
+
 /**
  * clears the console
  */
@@ -20,19 +21,34 @@ void CView::clear() {
     for ( int i = 0 ; i < 20 ; i ++)
         os << endl;
 }
+
+/**
+ * invalid key message
+ */
 void CView::invalidKey () {
     os << "You pressed an invalid key, please try again" << endl;
 }
+
 /**
- * will change to a template method
+ * prints a const char
  * @param str
  */
 void CView::print ( const char * str ) {
     os << str;
 }
+
+/**
+ * prints string
+ * @param str
+ */
 void CView::print ( const char str ){
     os << str;
 }
+
+/**
+ * prints a string
+ * @param str
+ */
 void CView::print ( string str ) {
     os << str;
 }
@@ -43,10 +59,11 @@ void CView::print ( string str ) {
 void CView::unableToSave() {
     os << "Mistake while saving the game. Try a different filename." << endl;
 }
+
 /**
- * prints to a specific file ( will change to a template method )
- * @param ofs
- * @param str
+ * prints to a specific file a const char
+ * @param ofs - certain file
+ * @param str - message
  * @return
  */
 bool CView::print ( ofstream & ofs, const char * str ){
@@ -57,6 +74,13 @@ bool CView::print ( ofstream & ofs, const char * str ){
         return false;
     return true;
 }
+
+/**
+ * prints to a specific file a character
+ * @param ofs - certain file
+ * @param str - message
+ * @return
+ */
 bool CView::print ( ofstream & ofs, char str ){
     if ( ! ofs . is_open() )
         return false;
@@ -65,6 +89,13 @@ bool CView::print ( ofstream & ofs, char str ){
         return false;
     return true;
 }
+
+/**
+ * prints to a specific file a string
+ * @param ofs - certain file
+ * @param str - message
+ * @return
+ */
 bool CView::print ( ofstream & ofs, string str ){
     if ( ! ofs . is_open() )
         return false;
@@ -73,6 +104,7 @@ bool CView::print ( ofstream & ofs, string str ){
         return false;
     return true;
 }
+
 /**
  * shows the main menu
  */
@@ -81,8 +113,9 @@ void CView::showMenu() {
          << "[i] introduction and controls" << endl
          << "[q] quit" << endl;
 }
+
 /**
- * show possibilities while playing the game
+ * shows possibilities while playing the game
  */
 void CView::showPossibilities (){
     os << "[m] main menu" << endl
@@ -92,6 +125,7 @@ void CView::showPossibilities (){
          << "[a] move left" << endl
          << "[d] move right" << endl;
 }
+
 /**
  * shows an error when player tries to move somewhere forbidden
  */

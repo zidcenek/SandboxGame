@@ -1,6 +1,6 @@
 CXX=g++
 LD=g++
-CXXFLAGS=-std=c++11 -Wall -pedantic
+CXXFLAGS=-std=c++11 -Wall -pedantic -Wextra
 
 all: sandboxGame
 
@@ -8,7 +8,7 @@ sandboxGame: main.o bear.o friend.o lava.o road.o view.o woods.o character.o mon
 	$(LD) -o $@ $^
 
 clean:
-	rm -f bear.o friend.o lava.o npc.o road.o view.o woods.o character.o monster.o player.o terrain.o wolf.o controlPanel.o map.o main.o sandboxGame stone.o
+	rm -f bear.o friend.o lava.o road.o view.o woods.o character.o monster.o player.o terrain.o wolf.o controlPanel.o map.o main.o sandboxGame stone.o treasure.o
 
 %o: %cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
@@ -18,7 +18,7 @@ controlPanel.o: controlPanel.cpp controlPanel.h character.h map.h terrain.h view
 friend.o: friend.cpp friend.h character.h
 character.o: character.cpp character.h
 lava.o: lava.cpp lava.h terrain.h character.h
-main.o: main.cpp character.h player.h npc.h friend.h monster.h bear.h wolf.h terrain.h road.h lava.h woods.h view.h map.h controlPanel.h
+main.o: main.cpp character.h player.h friend.h monster.h bear.h wolf.h terrain.h road.h lava.h woods.h view.h map.h controlPanel.h
 map.o: map.cpp character.h map.h terrain.h view.h friend.h bear.h monster.h wolf.h player.h lava.h woods.h road.h treasure.h
 monster.o: monster.cpp monster.h character.h
 player.o: player.cpp player.h character.h

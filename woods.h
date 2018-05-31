@@ -10,7 +10,7 @@
 const char WOODS_SYMBOL = 'w';
 
 /**
- * Class representing forest ( specific symbol W )
+ * Class representing forest ( specific symbol w )
  */
 class CWoods : public CTerrain {
 protected:

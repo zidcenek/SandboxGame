@@ -41,7 +41,7 @@ CMap::~CMap()
 
 /**
  * loads the whole map
- * @return
+ * @return - true if correctly loaded
  */
 bool CMap::load (){
     string srcFile;
@@ -78,15 +78,15 @@ bool CMap::load (){
 bool CMap::addTerrain ( const char & terrain, size_t lineNumber ) {
     CTerrain * tmp;
     switch ( terrain ){
-        case 'L' : tmp = new CLava ();
+        case LAVA_SYMBOL : tmp = new CLava ();
             break;
-        case 'R' : tmp = new CRoad ();
+        case ROAD_SYMBOL : tmp = new CRoad ();
             break;
-        case 'W' : tmp = new CWoods ();
+        case WOODS_SYMBOL : tmp = new CWoods ();
             break;
-        case 'T' : tmp = new CTreasure ();
+        case TREASURE_SYMBOL : tmp = new CTreasure ();
             break;
-        case 'S' : tmp = new CStone ();
+        case STONE_SYMBOL : tmp = new CStone ();
             break;
         default  :
             return false;
@@ -106,17 +106,17 @@ bool CMap::addCharacter ( const char & character, size_t lineNumber ) {
     bool playerFlag = false;
     pair<size_t, size_t> pos = make_pair( lineNumber, characters_map[lineNumber] . size() );
     switch ( character ){
-        case 'P' : tmp = new CPlayer ( pos, 100, 5 );
+        case PLAYER_SYMBOL : tmp = new CPlayer ( pos, 100, 5 );
                    playerFlag = true;
                    if ( ! characters . empty () )
                        if ( characters[0] -> getSymbol() == PLAYER_SYMBOL )
                            return false;
             break;
-        case 'F' : tmp = new CFriend ( pos );
+        case FRIEND_SYMBOL : tmp = new CFriend ( pos );
             break;
-        case 'B' : tmp = new CBear ( pos );
+        case BEAR_SYMBOL : tmp = new CBear ( pos );
             break;
-        case 'w' : tmp = new CWolf ( pos );
+        case WOLF_SYMBOL : tmp = new CWolf ( pos );
             break;
         case '_' : tmp = nullptr;
             break;
@@ -135,7 +135,7 @@ bool CMap::addCharacter ( const char & character, size_t lineNumber ) {
 
 /**
  * reads header of the file
- * @param ifs - ifstream
+ * @param ifs - ifstream - certain load file
  * @return - false if not in the correct format
  */
 bool CMap::readHeader ( ifstream & ifs ){
@@ -157,8 +157,8 @@ bool CMap::readHeader ( ifstream & ifs ){
 
 /**
  * reads the contents of the map
- * @param ifs - ifstream
- * @return
+ * @param ifs - ifstream - certain load file
+ * @return - false if not in the correct format
  */
 bool CMap::readContent ( ifstream & ifs ){
     string line;
@@ -190,8 +190,8 @@ bool CMap::readContent ( ifstream & ifs ){
 
 /**
  * reads special character info such as health, attack, etc. ( used while loading a saved game )
- * @param ifs
- * @return
+ * @param ifs - ifstream - certain load file
+ * @return - false if not in the correct format
  */
 bool CMap::readCharacterInfo ( ifstream & ifs ) {
     string line;
@@ -225,7 +225,7 @@ bool CMap::readCharacterInfo ( ifstream & ifs ) {
 
 /**
  * parsing my type of format used when saving the game ( string(5 chars):size_t )
- * @param ifs - ifstream
+ * @param ifs - ifstream - certain load file
  * @param name - return parameter specifing name of the line ( width, height etc. )
  * @param value - return parameter which saves the proper parameter
  * @return - false if not in a correct format
@@ -307,9 +307,7 @@ void CMap::save () const {
  * @return
  */
 bool CMap::correctPosition( size_t x, size_t y ) const {
-    if ( x >= height || y >= width )
-        return false;
-    return true;
+    return ! ( x >= height || y >= width );
 }
 
 /**
@@ -352,7 +350,7 @@ void CMap::move ( int x, int y ){
 
 /**
  * prints the map into a string
- * @return
+ * @return - returns string representing the map
  */
 string CMap::printMap () const {
     stringstream strs;
@@ -369,17 +367,16 @@ string CMap::printMap () const {
     }
     return strs . str ();
 }
-
+/**
+ * increases number of moves
+ */
 void CMap::increasesMoves (){
     moves ++;
-}
-void CMap::decreaseMoves (){
-    moves --;
 }
 
 /**
  * returns a string saying how many moves have been done
- * @return
+ * @return - returns string representing counter
  */
 string CMap::showCounter() const {
     string out = "Moves: ";
@@ -411,11 +408,11 @@ void CMap::clean() {
 CCharacter * CMap::getPlayer () const{
     return characters[0];
 }
+
 /**
  * circumstances under which the game is lost
  * @return - true if lost
  */
-
 bool CMap::loseTheGame() const {
     if ( ! characters[0] -> stillAlive() || moves >= max_moves )
         return true;
@@ -470,6 +467,7 @@ bool CMap::isAdjacentLava ( size_t x, size_t y ) const {
             return true;
     return false;
 }
+
 /**
  * lava has 20% chance to spread to adjacent positions
  */
@@ -484,6 +482,7 @@ void CMap::lavaSpreading (){
         }
     }
 }
+
 /**
  * if the action in terrain (children) is defined it changes under defined circumstaces
  */

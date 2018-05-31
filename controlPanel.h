@@ -11,6 +11,7 @@
 #include "map.h"
 #include "view.h"
 using namespace std;
+
 /**
  * takes care about playing the game
  */

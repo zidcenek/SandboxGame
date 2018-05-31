@@ -15,12 +15,41 @@ CCharacter::CCharacter( pair<size_t, size_t> pos, int hea, int att, char sym )
             health ( max_health ),
             attack ( att ),
             symbol ( sym ){}
-/**
- * destructor
- */
+
 CCharacter::~CCharacter()
 {
 }
+/**
+ * setters
+ */
+void CCharacter::setHealth ( int hea ){
+    health = hea;
+}
+void CCharacter::setMaxHealth ( int maxHea ){
+    max_health = maxHea;
+}
+void CCharacter::setAttack ( int att ){
+    attack = att;
+}
+void CCharacter::setPosition(size_t x, size_t y) {
+    position . first = x;
+    position . second = y;
+}
+/**
+ * getters
+ */
+pair <size_t, size_t> CCharacter::getPosition () const{
+    return position;
+}
+
+int CCharacter::getAttack() const {
+    return attack;
+}
+
+char CCharacter::getSymbol() const {
+    return symbol;
+}
+
 /**
  * prints stats of a single character - used when saving the game
  * @return
@@ -44,22 +73,11 @@ string CCharacter::printStats () const{
     out . append( "\n" );
     return out;
 }
-void CCharacter::setHealth ( int hea ){
-    health = hea;
-}
-void CCharacter::setMaxHealth ( int maxHea ){
-    max_health = maxHea;
-}
-void CCharacter::setAttack ( int att ){
-    attack = att;
-}
-void CCharacter::setPosition(size_t x, size_t y) {
-    position . first = x;
-    position . second = y;
-}
-pair <size_t, size_t> CCharacter::getPosition () const{
-    return position;
-}
+
+/**
+ * shows stats actual after every movement
+ * @return
+ */
 string CCharacter::showStats() const {
     string out;
     out . append ( "Health: ");
@@ -71,36 +89,37 @@ string CCharacter::showStats() const {
     return out;
 }
 
+/**
+ * interaction with another character
+ * @param character - enemy character
+ */
 void CCharacter::interaction ( CCharacter * character ) {
     cast ( character );
     character -> cast( this );
 }
+
+/**
+ * deals dmg to a self
+ * @param damage - power of the attack
+ */
 void CCharacter::recieveDmg ( int damage ){
     health -= damage;
 }
 
-int CCharacter::getMax_health() const {
-    return max_health;
-}
-
-int CCharacter::getHealth() const {
-    return health;
-}
-
-int CCharacter::getAttack() const {
-    return attack;
-}
+/**
+ * heals for a certain amount of health
+ * @param heal - power of the healing effect
+ */
 void CCharacter::heal( int heal ) {
     health += heal;
     if ( health > max_health )
         health = max_health;
 }
 
-char CCharacter::getSymbol() const {
-    return symbol;
-}
+/**
+ * checks wheter character is still alive
+ * @return - true if alive
+ */
 bool CCharacter::stillAlive (){
-    if ( health <= 0 )
-        return false;
-    return true;
+    return health > 0;
 }

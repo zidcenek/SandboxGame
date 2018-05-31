@@ -10,9 +10,19 @@ CStone::CStone()
 CStone::~CStone()
 {
 }
+/**
+ * prints itself
+ * @return
+ */
 char CStone::print () const {
     return STONE_SYMBOL;
 }
-string CStone::interact( CCharacter *character ) const {
+
+/**
+ * stone does not effect the character
+ * @param character - interacting character
+ * @return - message
+ */
+string CStone::interact( CCharacter * character ) const {
     return "Stones does not effect you.\n";
 }

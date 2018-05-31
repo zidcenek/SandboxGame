@@ -10,7 +10,7 @@
 const char LAVA_SYMBOL = 'l';
 
 /**
- * Class representing lava ( specific symbol L )
+ * Class representing lava ( specific symbol l )
  */
 class CLava : public CTerrain {
 protected:

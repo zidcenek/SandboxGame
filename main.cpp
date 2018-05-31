@@ -1,6 +1,5 @@
 #include "character.h"
 #include "player.h"
-#include "npc.h"
 #include "friend.h"
 #include "monster.h"
 #include "bear.h"
@@ -16,7 +15,6 @@
 using namespace std;
 
 int main() {
-    cout << "Hello, my Sandbox Game!" << endl;
     CView view ( cout );
     CControlPanel controler ( &view );
     controler . initialize ();

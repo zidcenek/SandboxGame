@@ -11,6 +11,7 @@ CMonster::CMonster ( pair<size_t, size_t> pos, int hea, int att, const char & sy
 CMonster::~CMonster ()
 {
 }
+
 /**
  * monster attacks to a certain character
  * @param character - enemy

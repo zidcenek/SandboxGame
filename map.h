@@ -41,7 +41,6 @@ public:
     bool correctPosition ( size_t x, size_t y ) const;
     void move ( int x, int y );
     void increasesMoves ();
-    void decreaseMoves ();
     bool loseTheGame () const;
     bool winTheGame () const;
     CCharacter * getPlayer () const;

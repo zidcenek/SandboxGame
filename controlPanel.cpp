@@ -5,20 +5,17 @@
 #include "controlPanel.h"
 
 using namespace std;
-/**
- * constructor
- */
+
 CControlPanel::CControlPanel ( CView * v )
         :   view ( v ),
             map ( *v )
 {
 }
-/**
- * destructor
- */
+
 CControlPanel::~CControlPanel()
 {
 }
+
 /**
  * initializes player's gaming experience ( shows main menu, etc )
  * @return
@@ -52,6 +49,11 @@ void CControlPanel::initialize (){
     }
     cin . clear ();
 }
+
+/**
+ * used for actual playing - is in endless cycle until the game ends or is ended
+ * @param play - wheter game is still to be played
+ */
 void CControlPanel::playMove ( bool & play ){
     char pressedKey;
     cin . clear ();

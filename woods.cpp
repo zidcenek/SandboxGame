@@ -11,9 +11,14 @@ CWoods::CWoods()
 CWoods::~CWoods()
 {
 }
+/**
+ * prints itself
+ * @return
+ */
 char CWoods::print () const {
     return WOODS_SYMBOL;
 }
+
 /**
  * there is a chance a branch falls on the player's head and stuns him for one turn ( add 1 move )
  */
